@@ -1,0 +1,13 @@
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\bin\Release\Lighting Interface.exe
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\bin\Release\Lighting Interface.pdb
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\obj\Release\Lighting_Interface.Buttons.resources
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\obj\Release\Lighting_Interface.frmAddActivity.resources
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\obj\Release\Lighting_Interface.frmMain.resources
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\obj\Release\Lighting_Interface.frmAddDevice.resources
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\obj\Release\Lighting_Interface.frmCommands.resources
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\obj\Release\Lighting_Interface.frmEditCommand.resources
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\obj\Release\Lighting_Interface.Properties.Resources.resources
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\obj\Release\Interface.csproj.GenerateResource.Cache
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\obj\Release\Lighting Interface.exe
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Interface\obj\Release\Lighting Interface.pdb
