@@ -38,6 +38,8 @@
             this.roundButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.squareButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.triangleButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.longButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tallButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,14 +105,16 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.roundButtonToolStripMenuItem,
             this.squareButtonToolStripMenuItem,
-            this.triangleButtonToolStripMenuItem});
+            this.triangleButtonToolStripMenuItem,
+            this.longButtonToolStripMenuItem,
+            this.tallButtonToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 136);
             // 
             // roundButtonToolStripMenuItem
             // 
             this.roundButtonToolStripMenuItem.Name = "roundButtonToolStripMenuItem";
-            this.roundButtonToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.roundButtonToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.roundButtonToolStripMenuItem.Text = "Round Button";
             // 
             // squareButtonToolStripMenuItem
@@ -124,6 +128,19 @@
             this.triangleButtonToolStripMenuItem.Name = "triangleButtonToolStripMenuItem";
             this.triangleButtonToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.triangleButtonToolStripMenuItem.Text = "Triangle Button";
+            // 
+            // longButtonToolStripMenuItem
+            // 
+            this.longButtonToolStripMenuItem.Name = "longButtonToolStripMenuItem";
+            this.longButtonToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.longButtonToolStripMenuItem.Text = "Long Button";
+            this.longButtonToolStripMenuItem.Click += new System.EventHandler(this.longButtonToolStripMenuItem_Click);
+            // 
+            // tallButtonToolStripMenuItem
+            // 
+            this.tallButtonToolStripMenuItem.Name = "tallButtonToolStripMenuItem";
+            this.tallButtonToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.tallButtonToolStripMenuItem.Text = "Tall Button";
             // 
             // frmAddActivity
             // 
@@ -160,6 +177,8 @@
         private System.Windows.Forms.ToolStripMenuItem roundButtonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem squareButtonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem triangleButtonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem longButtonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tallButtonToolStripMenuItem;
 
     }
 }

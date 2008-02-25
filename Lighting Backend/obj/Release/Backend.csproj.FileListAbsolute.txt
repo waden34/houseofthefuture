@@ -3,3 +3,8 @@ C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Lighting Backend\bin\Release\Lighting Backend.exe
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Lighting Backend\bin\Release\Lighting Backend.pdb
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HomeOfTheFuture\Lighting Backend\obj\Release\Lighting Backend.pdb
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Lighting Backend\bin\Release\Lighting Backend.exe
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Lighting Backend\bin\Release\Lighting Backend.pdb
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Lighting Backend\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Lighting Backend\obj\Release\Lighting Backend.exe
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Lighting Backend\obj\Release\Lighting Backend.pdb
