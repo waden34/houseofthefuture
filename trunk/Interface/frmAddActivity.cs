@@ -18,6 +18,8 @@ namespace Lighting_Interface
         List<string> device_ids;
         List<string> devices;
         string activity_id;
+        Point loc;
+        bool isMoving;
         public frmAddActivity()
         {
             InitializeComponent();
@@ -127,7 +129,7 @@ namespace Lighting_Interface
                 GetCommands();
 
             }
-            else
+            else if (btnOk.Text == "Setup Buttons")
             {
                 for (int j = 0; j < this.Controls.Count; j++)
                 {
@@ -139,6 +141,11 @@ namespace Lighting_Interface
                 }
                 btnOk.Text = "Ok";
                 MessageBox.Show("Right click the window to select a button type to add to the layout.");
+                this.ContextMenuStrip = contextMenuStrip1;
+            }
+            else
+            {
+                this.Dispose();
             }
         }
 
@@ -197,6 +204,73 @@ namespace Lighting_Interface
                 conn.Dispose();
                 conn = null;
             }
+        }
+
+        private void longButtonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Buttons button = new Buttons();
+            button.Orientation = Buttons.Orient.Long;
+            
+            SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
+            SQLiteDataAdapter da = new SQLiteDataAdapter("Select manufacturer, type, model, devices.device_id from devices join manufacturer on manufacturer.manufacturer_id = devices.manufacturer_id join device_type on device_type.type_id = devices.type_id", conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<string> devices = new List<string>();
+            ComboBox.ObjectCollection items = new ComboBox.ObjectCollection(new ComboBox());
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                items.Add(dt.Rows[i]["manufacturer"].ToString() + " " + dt.Rows[i]["type"].ToString() + " - " + dt.Rows[i]["model"].ToString());
+                devices.Add(dt.Rows[i]["device_id"].ToString());
+            }
+            InputResult result = inputBox.getInput("What device is this button for?", items, devices);
+            button.Tag = result.device_id;
+
+            devices = new List<string>();
+
+            items = new ComboBox.ObjectCollection(new ComboBox());
+            da = new SQLiteDataAdapter("Select long_name, command_id, display_name from ir_commands where device_id = " + result.device_id + ";", conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                items.Add(dt.Rows[i]["long_name"].ToString());
+                devices.Add(dt.Rows[i]["command_id"].ToString());
+            }
+            result = inputBox.getInput("What command?", items, devices);
+            button.Caption = result.Text;
+            button.MouseDown += new MouseEventHandler(Buttons_MouseDown);
+            button.MouseUp += new MouseEventHandler(Buttons_MouseUp);
+            button.MouseMove += new MouseEventHandler(Buttons_MouseMove);
+            this.Controls.Add(button);
+            items = null;
+            dt.Dispose();
+            dt = null;
+            da.Dispose();
+            da = null;
+            conn.Dispose();
+            conn = null;
+
+
+        }
+
+        void Buttons_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMoving)
+            {
+                ((Buttons)sender).Location = e.Location;
+            }
+        }
+
+        protected virtual void Buttons_MouseUp(object sender, MouseEventArgs e)
+        {
+            isMoving = false;
+            ((Buttons)sender).isMoving = false;
+        }
+
+        protected virtual void Buttons_MouseDown(object sender, MouseEventArgs e)
+        {
+            isMoving = true;
+            ((Buttons)sender).isMoving = true;
         }
     }
 }
