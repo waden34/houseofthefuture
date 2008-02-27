@@ -237,6 +237,12 @@ namespace Lighting_Interface
                 devices.Add(dt.Rows[i]["command_id"].ToString());
             }
             result = inputBox.getInput("What command?", items, devices);
+            Button l = new Button();
+            l.Text = "test";
+            l.MouseDown += new MouseEventHandler(Buttons_MouseDown);
+            l.MouseUp += new MouseEventHandler(Buttons_MouseUp);
+            l.MouseMove += new MouseEventHandler(Buttons_MouseMove);
+            //this.Controls.Add(l);
             button.Caption = result.Text;
             button.MouseDown += new MouseEventHandler(Buttons_MouseDown);
             button.MouseUp += new MouseEventHandler(Buttons_MouseUp);
@@ -250,27 +256,33 @@ namespace Lighting_Interface
             conn.Dispose();
             conn = null;
 
-
         }
 
         void Buttons_MouseMove(object sender, MouseEventArgs e)
         {
             if (isMoving)
             {
-                ((Buttons)sender).Location = e.Location;
+                Point newLoc = new Point();
+                newLoc = this.PointToClient(MousePosition);
+                newLoc.Offset(-loc.X, -loc.Y);
+                ((Buttons)sender).Location = newLoc;
+                //((Buttons)sender).Location = new Point(e.Location.X, e.Location.Y);
             }
         }
 
         protected virtual void Buttons_MouseUp(object sender, MouseEventArgs e)
         {
             isMoving = false;
-            ((Buttons)sender).isMoving = false;
+            //((Buttons)sender).Invalidate();
         }
 
         protected virtual void Buttons_MouseDown(object sender, MouseEventArgs e)
         {
             isMoving = true;
-            ((Buttons)sender).isMoving = true;
+            loc = ((Buttons)sender).Location;
+            Cursor.Clip = this.RectangleToScreen(new Rectangle(this.PointToClient(MousePosition).X - ((Buttons)sender).Location.X, this.PointToClient(MousePosition).Y - ((Buttons)sender).Location.Y, this.ClientSize.Width - (((Buttons)sender).Width - this.PointToClient(MousePosition).X - ((Buttons)sender).Location.X), this.ClientSize.Height - (((Buttons)sender).Height - this.PointToClient(MousePosition).Y - ((Buttons)sender).Location.Y)));
+            //((Buttons)sender).Invalidate();
+
         }
     }
 }
