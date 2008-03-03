@@ -82,6 +82,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="OptT3Lib">
+      <Guid>{4C9B5EAF-D45D-4858-939D-704CA0DAB10D}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
     <COMReference Include="WMPLib">
       <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
       <VersionMajor>1</VersionMajor>

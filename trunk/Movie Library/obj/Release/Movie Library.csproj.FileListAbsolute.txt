@@ -31,3 +31,5 @@ C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movi
 C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\obj\Release\Movie Library.csproj.GenerateResource.Cache
 C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\obj\Release\Movie Library.exe
 C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\obj\Release\Movie Library.pdb
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Movie Library\bin\Release\Interop.OptT3Lib.dll
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Movie Library\obj\Release\Interop.OptT3Lib.dll

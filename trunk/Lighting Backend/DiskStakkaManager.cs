@@ -118,7 +118,7 @@ namespace House_of_the_Future
             }
         }
 
-        public void setUsedSlots(int type, int serial, List<int> state)
+        public void setUsedSlots(int serial, List<int> state)
         {
             mutex.WaitOne();
             for (int i = 0; i < DISCSTAKKA_MAX_STACK_HEIGHT; i++)
