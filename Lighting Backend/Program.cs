@@ -36,7 +36,6 @@ namespace House_of_the_Future
         static DiskStakkaManager manager;
         static string path;
         static USBSharp myUsb;
-        //static FileStream fs;
 
         class state
         {
@@ -260,8 +259,26 @@ namespace House_of_the_Future
                     System.Threading.ThreadStart job = new System.Threading.ThreadStart(manager.start);
                     System.Threading.Thread t = new System.Threading.Thread(job);
                     t.Start();
-
-
+                    SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
+                    SQLiteDataAdapter da = null;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        da = new SQLiteDataAdapter("select slot from discs where unit_id = " + i + " and ejected = 0;", conn);
+                        List<int> state = new List<int>();
+                        System.Data.DataTable dt = new System.Data.DataTable();
+                        da.Fill(dt);
+                        for (int j = 0; j < dt.Rows.Count; j++)
+                        {
+                            state.Add(int.Parse(dt.Rows[j]["slot"].ToString()));
+                        }
+                        manager.setUsedSlots(i, state);
+                        dt.Dispose();
+                        dt = null;
+                    }
+                    da.Dispose();
+                    da = null;
+                    conn.Dispose();
+                    conn = null;
 
                 }
             }

@@ -56,12 +56,10 @@
             this.editCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeEmitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttons1 = new Lighting_Interface.Buttons();
             this.panel1.SuspendLayout();
             this.panelSetup.SuspendLayout();
             this.panelSetupDevices.SuspendLayout();
             this.panelSetupActivities.SuspendLayout();
-            this.panelActivities.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,7 +85,7 @@
             this.panel1.Controls.Add(this.btnActivities);
             this.panel1.Location = new System.Drawing.Point(781, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(153, 442);
+            this.panel1.Size = new System.Drawing.Size(153, 480);
             this.panel1.TabIndex = 1;
             // 
             // btnSetup
@@ -138,7 +136,7 @@
             this.lblTime.AutoSize = true;
             this.lblTime.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTime.ForeColor = System.Drawing.Color.White;
-            this.lblTime.Location = new System.Drawing.Point(691, 426);
+            this.lblTime.Location = new System.Drawing.Point(691, 456);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(0, 16);
             this.lblTime.TabIndex = 2;
@@ -167,7 +165,7 @@
             this.panelSetup.Controls.Add(this.panelSetupActivities);
             this.panelSetup.Location = new System.Drawing.Point(-659, 1);
             this.panelSetup.Name = "panelSetup";
-            this.panelSetup.Size = new System.Drawing.Size(658, 442);
+            this.panelSetup.Size = new System.Drawing.Size(658, 480);
             this.panelSetup.TabIndex = 3;
             this.panelSetup.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
             this.panelSetup.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
@@ -221,7 +219,7 @@
             this.panelSetupDevices.Controls.Add(this.btnAddDevice);
             this.panelSetupDevices.Location = new System.Drawing.Point(-659, 1);
             this.panelSetupDevices.Name = "panelSetupDevices";
-            this.panelSetupDevices.Size = new System.Drawing.Size(658, 442);
+            this.panelSetupDevices.Size = new System.Drawing.Size(658, 480);
             this.panelSetupDevices.TabIndex = 3;
             this.panelSetupDevices.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
             this.panelSetupDevices.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
@@ -246,7 +244,7 @@
             this.panelSetupActivities.Controls.Add(this.btnAddActivity);
             this.panelSetupActivities.Location = new System.Drawing.Point(-659, 1);
             this.panelSetupActivities.Name = "panelSetupActivities";
-            this.panelSetupActivities.Size = new System.Drawing.Size(658, 442);
+            this.panelSetupActivities.Size = new System.Drawing.Size(658, 480);
             this.panelSetupActivities.TabIndex = 55;
             this.panelSetupActivities.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
             this.panelSetupActivities.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
@@ -273,10 +271,9 @@
             // 
             // panelActivities
             // 
-            this.panelActivities.Controls.Add(this.buttons1);
             this.panelActivities.Location = new System.Drawing.Point(1, 1);
             this.panelActivities.Name = "panelActivities";
-            this.panelActivities.Size = new System.Drawing.Size(658, 442);
+            this.panelActivities.Size = new System.Drawing.Size(658, 480);
             this.panelActivities.TabIndex = 4;
             this.panelActivities.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
             this.panelActivities.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
@@ -285,7 +282,7 @@
             // 
             this.panelLighting.Location = new System.Drawing.Point(-659, 1);
             this.panelLighting.Name = "panelLighting";
-            this.panelLighting.Size = new System.Drawing.Size(658, 442);
+            this.panelLighting.Size = new System.Drawing.Size(658, 480);
             this.panelLighting.TabIndex = 5;
             this.panelLighting.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
             this.panelLighting.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
@@ -294,7 +291,7 @@
             // 
             this.panelDevices.Location = new System.Drawing.Point(-659, 1);
             this.panelDevices.Name = "panelDevices";
-            this.panelDevices.Size = new System.Drawing.Size(658, 442);
+            this.panelDevices.Size = new System.Drawing.Size(658, 480);
             this.panelDevices.TabIndex = 12;
             this.panelDevices.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
             this.panelDevices.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
@@ -316,46 +313,33 @@
             this.changeEmitterToolStripMenuItem,
             this.renameToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(157, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(160, 70);
             // 
             // editCommandsToolStripMenuItem
             // 
             this.editCommandsToolStripMenuItem.Name = "editCommandsToolStripMenuItem";
-            this.editCommandsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.editCommandsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.editCommandsToolStripMenuItem.Text = "Commands";
             this.editCommandsToolStripMenuItem.Click += new System.EventHandler(this.editCommandsToolStripMenuItem_Click);
             // 
             // changeEmitterToolStripMenuItem
             // 
             this.changeEmitterToolStripMenuItem.Name = "changeEmitterToolStripMenuItem";
-            this.changeEmitterToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.changeEmitterToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.changeEmitterToolStripMenuItem.Text = "Change Emitter";
             // 
             // renameToolStripMenuItem
             // 
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.renameToolStripMenuItem.Text = "Rename";
-            // 
-            // buttons1
-            // 
-            this.buttons1.AutoSize = true;
-            this.buttons1.Caption = "Power On";
-            this.buttons1.CaptionFont = new System.Drawing.Font("Cooper Black", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttons1.ForeColor = System.Drawing.Color.White;
-            this.buttons1.Location = new System.Drawing.Point(39, 28);
-            this.buttons1.Name = "buttons1";
-            this.buttons1.Orientation = Lighting_Interface.Buttons.Orient.Tall;
-            this.buttons1.Size = new System.Drawing.Size(176, 327);
-            this.buttons1.TabIndex = 1;
-            this.buttons1.TabStop = false;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.ClientSize = new System.Drawing.Size(784, 444);
+            this.ClientSize = new System.Drawing.Size(800, 480);
             this.Controls.Add(this.panelActivities);
             this.Controls.Add(this.panelSetup);
             this.Controls.Add(this.lblTime);
@@ -376,8 +360,6 @@
             this.panelSetupDevices.PerformLayout();
             this.panelSetupActivities.ResumeLayout(false);
             this.panelSetupActivities.PerformLayout();
-            this.panelActivities.ResumeLayout(false);
-            this.panelActivities.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -425,7 +407,6 @@
         private System.Windows.Forms.ToolStripMenuItem editCommandsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeEmitterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
-        private Buttons buttons1;
     }
 }
 

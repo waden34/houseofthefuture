@@ -40,6 +40,11 @@
             this.triangleButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.longButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tallButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.specialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tVGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.discBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lightingControlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +70,7 @@
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.Location = new System.Drawing.Point(191, 389);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.Size = new System.Drawing.Size(107, 23);
             this.btnOk.TabIndex = 16;
             this.btnOk.Text = "Next";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -103,19 +108,21 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.specialToolStripMenuItem,
             this.roundButtonToolStripMenuItem,
             this.squareButtonToolStripMenuItem,
             this.triangleButtonToolStripMenuItem,
             this.longButtonToolStripMenuItem,
             this.tallButtonToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 136);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 158);
             // 
             // roundButtonToolStripMenuItem
             // 
             this.roundButtonToolStripMenuItem.Name = "roundButtonToolStripMenuItem";
             this.roundButtonToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.roundButtonToolStripMenuItem.Text = "Round Button";
+            this.roundButtonToolStripMenuItem.Click += new System.EventHandler(this.roundButtonToolStripMenuItem_Click);
             // 
             // squareButtonToolStripMenuItem
             // 
@@ -141,6 +148,42 @@
             this.tallButtonToolStripMenuItem.Name = "tallButtonToolStripMenuItem";
             this.tallButtonToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.tallButtonToolStripMenuItem.Text = "Tall Button";
+            this.tallButtonToolStripMenuItem.Click += new System.EventHandler(this.tallButtonToolStripMenuItem_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(12, 71);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(628, 312);
+            this.panel1.TabIndex = 21;
+            // 
+            // specialToolStripMenuItem
+            // 
+            this.specialToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tVGuideToolStripMenuItem,
+            this.discBrowserToolStripMenuItem,
+            this.lightingControlToolStripMenuItem});
+            this.specialToolStripMenuItem.Name = "specialToolStripMenuItem";
+            this.specialToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.specialToolStripMenuItem.Text = "Special";
+            // 
+            // tVGuideToolStripMenuItem
+            // 
+            this.tVGuideToolStripMenuItem.Name = "tVGuideToolStripMenuItem";
+            this.tVGuideToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.tVGuideToolStripMenuItem.Text = "TV Guide";
+            // 
+            // discBrowserToolStripMenuItem
+            // 
+            this.discBrowserToolStripMenuItem.Name = "discBrowserToolStripMenuItem";
+            this.discBrowserToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.discBrowserToolStripMenuItem.Text = "Disc Browser";
+            // 
+            // lightingControlToolStripMenuItem
+            // 
+            this.lightingControlToolStripMenuItem.Name = "lightingControlToolStripMenuItem";
+            this.lightingControlToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.lightingControlToolStripMenuItem.Text = "Lighting Control";
             // 
             // frmAddActivity
             // 
@@ -149,6 +192,7 @@
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.ClientSize = new System.Drawing.Size(652, 436);
             this.ControlBox = false;
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtActivityName);
             this.Controls.Add(this.label1);
@@ -179,6 +223,11 @@
         private System.Windows.Forms.ToolStripMenuItem triangleButtonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem longButtonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tallButtonToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripMenuItem specialToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tVGuideToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem discBrowserToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lightingControlToolStripMenuItem;
 
     }
 }

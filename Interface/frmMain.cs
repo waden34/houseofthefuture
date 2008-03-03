@@ -186,7 +186,6 @@ namespace Lighting_Interface
             this.btnDeviceSetup.Left = 11;
             this.btnAddDevice.Left = (this.panelSetupDevices.Width - this.btnAddDevice.Width) / 2;
             this.btnAddActivity.Left = (this.panelSetupActivities.Width - this.btnAddActivity.Width) / 2;
-            buttons1.Text = "Power On";
             
             lockIR = new object();
             lockInserts = new object();
@@ -456,7 +455,9 @@ namespace Lighting_Interface
                 }
                 if (i % 2 > 0)
                 {
-                    iTop += ((panelActivities.Height - 90) / ((dt.Rows.Count - 1) / 2));
+                    int l = (panelActivities.Height - 90);
+                    int ll = ((dt.Rows.Count - 1) / 2);
+                    iTop += (int)((panelActivities.Height - 90) / (float)((dt.Rows.Count - 1) / 2));
                 }
 
             }
@@ -471,6 +472,11 @@ namespace Lighting_Interface
         void activity_click(object sender, EventArgs e)
         {
             string activity = ((Button)sender).Name.Substring(11);
+            for (int i = 0; i < panelActivities.Controls.Count; i++)
+            {
+                panelActivities.Controls.RemoveAt(i);
+                i--;
+            }
             SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
             SQLiteDataAdapter da = new SQLiteDataAdapter("Select distinct activity_startup.device_id, activity_startup.command_id, display_name from activity_startup join ir_commands on ir_commands.command_id = activity_startup.command_id and ir_commands.device_id = activity_startup.device_id where activity_id = " + activity + ";", conn);
             DataTable dt = new DataTable();
@@ -485,17 +491,51 @@ namespace Lighting_Interface
                     holding = true;
                     System.Threading.ThreadStart job = new System.Threading.ThreadStart(CommandClick);
                     System.Threading.Thread t = new System.Threading.Thread(job);
-                    t.Start();
+                    //t.Start();
                     System.Threading.Thread.Sleep(1000);
                 }
             }
-
+            da = new SQLiteDataAdapter("select x,y,width,height,type,display_name, ir_commands.device_id, ir_commands.command_id from activity_buttons join ir_commands on ir_commands.command_id = activity_buttons.command_id where activity_id = " + activity + ";", conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Buttons button = new Buttons();
+                button.Caption = dt.Rows[i]["display_name"].ToString();
+                button.Type = (Buttons.ButtonType)(int.Parse(dt.Rows[i]["type"].ToString()));
+                button.Left = int.Parse(dt.Rows[i]["x"].ToString());
+                button.Top = int.Parse(dt.Rows[i]["y"].ToString());
+                
+                button.Tag = dt.Rows[i]["device_id"].ToString();
+                button.Width = int.Parse(dt.Rows[i]["width"].ToString());
+                button.Height = int.Parse(dt.Rows[i]["height"].ToString());
+                button.MouseDown += new MouseEventHandler(button_MouseDown);
+                button.MouseUp += new MouseEventHandler(button_MouseUp);
+                panelActivities.Controls.Add(button);
+                button.Invalidate();
+            }
             dt.Dispose();
             dt = null;
             da.Dispose();
             da = null;
             conn.Dispose();
             conn = null;
+        }
+
+        void button_MouseUp(object sender, MouseEventArgs e)
+        {
+            holding = false;
+        }
+
+        void button_MouseDown(object sender, MouseEventArgs e)
+        {
+            holding = true;
+            activeDevice = ((Buttons)sender).Tag.ToString();
+            activeDisplayName = ((Buttons)sender).Caption;
+            holding = true;
+            System.Threading.ThreadStart job = new System.Threading.ThreadStart(CommandClick);
+            System.Threading.Thread t = new System.Threading.Thread(job);
+            t.Start();
         }
 
         public void btnDeviceSetup_Click(object sender, System.EventArgs e)

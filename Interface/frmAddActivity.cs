@@ -20,6 +20,7 @@ namespace Lighting_Interface
         string activity_id;
         Point loc;
         bool isMoving;
+        RectTrackerSharp.RectTracker CSharpTracker;
         public frmAddActivity()
         {
             InitializeComponent();
@@ -47,7 +48,7 @@ namespace Lighting_Interface
                 chk.FlatStyle = FlatStyle.Flat;
                 chk.ForeColor = Color.White;
                 chk.FlatAppearance.BorderColor = Color.SteelBlue;
-                this.Controls.Add(chk);
+                this.panel1.Controls.Add(chk);
                 chk.Top = 80 + ((i - (i % 2)) * 30);
                 chk.AutoSize = true;
                 chk.AutoEllipsis = false;
@@ -78,7 +79,7 @@ namespace Lighting_Interface
                     MessageBox.Show("Please enter a name for this activity");
                     return;
                 }
-                foreach (Control ctl in this.Controls)
+                foreach (Control ctl in this.panel1.Controls)
                 {
                     if (ctl.GetType() == typeof(CheckBox) && ((CheckBox)ctl).Checked)
                     {
@@ -141,10 +142,27 @@ namespace Lighting_Interface
                 }
                 btnOk.Text = "Ok";
                 MessageBox.Show("Right click the window to select a button type to add to the layout.");
+                this.Width = 800;
+                this.Height = 480;
+                this.StartPosition = FormStartPosition.CenterScreen;
                 this.ContextMenuStrip = contextMenuStrip1;
             }
             else
             {
+                foreach (Control ctl in this.Controls)
+                {
+                    if (ctl.GetType() == typeof(Buttons))
+                    {
+                        SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
+                        SQLiteDataAdapter da = new SQLiteDataAdapter("insert into activity_buttons values (" + activity_id + "," + ((Buttons)ctl).Tag.ToString().Substring(0,((Buttons)ctl).Tag.ToString().IndexOf(",")).Trim() + "," + ((Buttons)ctl).Tag.ToString().Substring(((Buttons)ctl).Tag.ToString().IndexOf(",") + 1).Trim() + "," + ((Buttons)ctl).Left.ToString() + "," + ((Buttons)ctl).Top.ToString() + "," + ((Buttons)ctl).Height.ToString() + "," + ((Buttons)ctl).Width.ToString() + "," + (int)((Buttons)ctl).Type + ");", conn);
+                        da.Fill(new DataTable());
+                        da.Dispose();
+                        da = null;
+                        conn.Dispose();
+                        conn = null;
+
+                    }
+                }
                 this.Dispose();
             }
         }
@@ -157,9 +175,17 @@ namespace Lighting_Interface
             }
             else if (btnOk.Text == "Next Device")
             {
+                for (int j = 0; j < this.panel1.Controls.Count; j++)
+                {
+                    if (this.panel1.Controls[j].GetType() != typeof(Button))
+                    {
+                        this.panel1.Controls.RemoveAt(j);
+                        j--;
+                    }
+                }
                 for (int j = 0; j < this.Controls.Count; j++)
                 {
-                    if (this.Controls[j].GetType() != typeof(Button))
+                    if (this.Controls[j].GetType() != typeof(Button) && this.Controls[j].GetType() != typeof(Panel))
                     {
                         this.Controls.RemoveAt(j);
                         j--;
@@ -189,7 +215,7 @@ namespace Lighting_Interface
                     chk.FlatStyle = FlatStyle.Flat;
                     chk.ForeColor = Color.White;
                     chk.FlatAppearance.BorderColor = Color.SteelBlue;
-                    this.Controls.Add(chk);
+                    this.panel1.Controls.Add(chk);
                     chk.AutoSize = true;
                     chk.AutoEllipsis = false;
                     chk.Top = 80 + ((i - (i % 2)) * 30);
@@ -203,14 +229,24 @@ namespace Lighting_Interface
                 da = null;
                 conn.Dispose();
                 conn = null;
+                if ((activeDevice + 1) == devices.Count)
+                {
+                    btnOk.Text = "Setup Buttons";
+                }
             }
         }
 
         private void longButtonToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            AddButton(Buttons.ButtonType.Long);
+
+        }
+
+        private void AddButton(Buttons.ButtonType type)
+        {
             Buttons button = new Buttons();
-            button.Orientation = Buttons.Orient.Long;
-            
+            button.Type = type;
+
             SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
             SQLiteDataAdapter da = new SQLiteDataAdapter("Select manufacturer, type, model, devices.device_id from devices join manufacturer on manufacturer.manufacturer_id = devices.manufacturer_id join device_type on device_type.type_id = devices.type_id", conn);
             DataTable dt = new DataTable();
@@ -237,12 +273,7 @@ namespace Lighting_Interface
                 devices.Add(dt.Rows[i]["command_id"].ToString());
             }
             result = inputBox.getInput("What command?", items, devices);
-            Button l = new Button();
-            l.Text = "test";
-            l.MouseDown += new MouseEventHandler(Buttons_MouseDown);
-            l.MouseUp += new MouseEventHandler(Buttons_MouseUp);
-            l.MouseMove += new MouseEventHandler(Buttons_MouseMove);
-            //this.Controls.Add(l);
+            button.Tag += "," + result.device_id;
             button.Caption = result.Text;
             button.MouseDown += new MouseEventHandler(Buttons_MouseDown);
             button.MouseUp += new MouseEventHandler(Buttons_MouseUp);
@@ -255,7 +286,6 @@ namespace Lighting_Interface
             da = null;
             conn.Dispose();
             conn = null;
-
         }
 
         void Buttons_MouseMove(object sender, MouseEventArgs e)
@@ -278,11 +308,26 @@ namespace Lighting_Interface
 
         protected virtual void Buttons_MouseDown(object sender, MouseEventArgs e)
         {
-            isMoving = true;
-            loc = ((Buttons)sender).Location;
-            Cursor.Clip = this.RectangleToScreen(new Rectangle(this.PointToClient(MousePosition).X - ((Buttons)sender).Location.X, this.PointToClient(MousePosition).Y - ((Buttons)sender).Location.Y, this.ClientSize.Width - (((Buttons)sender).Width - this.PointToClient(MousePosition).X - ((Buttons)sender).Location.X), this.ClientSize.Height - (((Buttons)sender).Height - this.PointToClient(MousePosition).Y - ((Buttons)sender).Location.Y)));
-            //((Buttons)sender).Invalidate();
+            ((Buttons)sender).BringToFront();
+            ((Buttons)sender).Capture = false;
+            if (this.Controls.Contains(CSharpTracker))
+                this.Controls.Remove(CSharpTracker);
+            CSharpTracker = new RectTrackerSharp.RectTracker(((Buttons)sender));
 
+            this.Controls.Add(CSharpTracker);
+            CSharpTracker.BringToFront();
+            CSharpTracker.Draw();
+
+        }
+
+        private void roundButtonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddButton(Buttons.ButtonType.Round);
+        }
+
+        private void tallButtonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddButton(Buttons.ButtonType.Tall);
         }
     }
 }

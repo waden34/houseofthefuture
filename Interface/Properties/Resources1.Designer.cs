@@ -81,6 +81,27 @@ namespace Lighting_Interface.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap button_tall {
+            get {
+                object obj = ResourceManager.GetObject("button_tall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_tall_click {
+            get {
+                object obj = ResourceManager.GetObject("button_tall_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_tall_over {
+            get {
+                object obj = ResourceManager.GetObject("button_tall_over", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap round_button {
             get {
                 object obj = ResourceManager.GetObject("round_button", resourceCulture);

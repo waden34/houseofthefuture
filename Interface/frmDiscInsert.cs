@@ -52,12 +52,16 @@ namespace Lighting_Interface
                 da = null;
                 conn.Dispose();
                 conn = null;
-
+                frmAddDisc frm = new frmAddDisc();
+                frm.database = database;
+                frm.unit_id = unit_id;
+                frm.pos = pos;
+                frm.ShowDialog();
             }
             else if (rbEjected.Checked)
             {
                 SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
-                SQLiteDataAdapter da = new SQLiteDataAdapter("update discs set ejected = 0, unit_id = " + unit_id + ",pos = " + pos + " where disc_id = " + disc_ids[cbDiscs.SelectedIndex] + ";", conn);
+                SQLiteDataAdapter da = new SQLiteDataAdapter("update discs set ejected = 0, unit_id = " + unit_id + ",slot = " + pos + " where disc_id = " + disc_ids[cbDiscs.SelectedIndex] + ";", conn);
                 da.Fill(new DataTable());
                 da = new SQLiteDataAdapter("delete from pending_inserts where unit_id = " + unit_id + " and slot = " + pos + ";", conn);
                 da.Fill(new DataTable());

@@ -127,6 +127,15 @@
   <data name="button_over" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button_over.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="button_tall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button_tall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button_tall_click" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button_tall_click.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button_tall_over" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button_tall_over.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="round_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\round_button.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

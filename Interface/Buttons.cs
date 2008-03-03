@@ -12,27 +12,134 @@ namespace Lighting_Interface
 {
     public partial class Buttons : UserControl
     {
-        Orient orient;
+        ButtonType buttonType;
         int angle;
         Image image;
         Font font;
         string caption;
         bool moving;
+        ButtonState state;
+
         public Buttons()
         {
             InitializeComponent();
+            state = ButtonState.Normal;
             this.MouseEnter += new EventHandler(Buttons_MouseEnter);
             this.MouseLeave += new EventHandler(Buttons_MouseLeave);
             this.MouseDown += new MouseEventHandler(Buttons_MouseDown);
             this.MouseUp += new MouseEventHandler(Buttons_MouseUp);
             font = new Font("Cooper Black", 12, FontStyle.Regular);
-            image = Properties.Resources.button;
+            this.Paint += new PaintEventHandler(Buttons_Paint);
+            switch (buttonType)
+            {
+                case ButtonType.Long:
+                    image = Properties.Resources.button;
+                    break;
+                case ButtonType.Round:
+                    image = Properties.Resources.round_button;
+                    break;
+                case ButtonType.Tall:
+                    image = Properties.Resources.button_tall;
+                    break;
+                default:
+                    image = Properties.Resources.button;
+                    break;
+
+            }
+            
             this.Resize += new EventHandler(Buttons_Resize);
             Graphics g = Graphics.FromHwnd(this.Handle);
             g.Clear(this.BackColor);
             g.DrawImage(image, 0, 0, this.Width, this.Height);
             g.RotateTransform(angle);
             g.DrawString(caption, font, Brushes.White, (this.Width - g.MeasureString(caption, font).Width) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
+
+        }
+
+        void Buttons_Paint(object sender, PaintEventArgs e)
+        {
+            if (buttonType == ButtonType.Tall)
+            {
+                switch (state)
+                {
+                    case ButtonState.Normal:
+                        image = Properties.Resources.button_tall;
+                        break;
+                    case ButtonState.Click:
+                        image = Properties.Resources.button_tall_click;
+                        break;
+                    case ButtonState.Hover:
+                        image = Properties.Resources.button_tall_over;
+                        break;
+                    default:
+                        image = Properties.Resources.button_tall;
+                        break;
+                }
+                
+            
+            }
+            else if (buttonType == ButtonType.Round)
+            {
+                switch (state)
+                {
+                    case ButtonState.Normal:
+                        image = Properties.Resources.round_button;
+                        break;
+                    case ButtonState.Click:
+                        image = Properties.Resources.round_button_click;
+                        break;
+                    case ButtonState.Hover:
+                        image = Properties.Resources.round_button_over;
+                        break;
+                    default:
+                        image = Properties.Resources.round_button;
+                        break;
+                }
+            }
+            else
+            {
+                switch (state)
+                {
+                    case ButtonState.Normal:
+                        image = Properties.Resources.button;
+                        break;
+                    case ButtonState.Click:
+                        image = Properties.Resources.button_click;
+                        break;
+                    case ButtonState.Hover:
+                        image = Properties.Resources.button_over;
+                        break;
+                    default:
+                        image = Properties.Resources.button;
+                        break;
+                }
+            }
+            Graphics g = Graphics.FromHwnd(this.Handle);
+            g.Clear(this.BackColor);
+            g.DrawImage(image, 0, 0, this.Width, this.Height);
+            g.RotateTransform(angle);
+
+            if (g.MeasureString(caption, font).Height > this.Height)
+            {
+                font = new Font(font.FontFamily, (this.Height / 2));
+            }
+            else if (g.MeasureString(caption, font).Width > this.Width)
+            {
+                font = new Font(font.FontFamily, (this.Width / caption.Length));
+            }
+            else
+            {
+                if ((this.Height / 2) > this.Width / caption.Length)
+                {
+                    font = new Font(font.FontFamily, (this.Width / caption.Length));
+                }
+                else
+                {
+                    font = new Font(font.FontFamily, (this.Height / 2));
+                }
+            }
+            g.DrawString(caption, font, Brushes.White, ((this.Width - (g.MeasureString(caption, font).Width - (font.Size / 2))) / 2), ((this.Height - g.MeasureString(caption, font).Height) / 2), StringFormat.GenericTypographic);
+
 
         }
         public bool isMoving
@@ -44,26 +151,8 @@ namespace Lighting_Interface
         }
         void Buttons_Resize(object sender, EventArgs e)
         {
-
-            Bitmap bmp;
-            if (orient == Orient.Tall)
-            {
-                bmp = new Bitmap(image, this.Height, this.Width);
-                image = bmp;
-                image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            }
-            else
-            {
-                bmp = new Bitmap(image, this.Width, this.Height);
-                image = bmp;
-            }
-            Graphics g = Graphics.FromHwnd(this.Handle);
-            g.Clear(this.BackColor);
-            g.DrawImage(image, 0, 0, this.Width, this.Height);
-            g.RotateTransform(angle);
-            g.DrawString(caption, font, Brushes.White, (this.Width - g.MeasureString(caption, font).Width) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
-
-
+            Buttons_Paint(null, null);
+            
         }
 
  
@@ -78,7 +167,7 @@ namespace Lighting_Interface
             g.Clear(this.BackColor);
             g.DrawImage(image, 0, 0, this.Width, this.Height);
             g.RotateTransform(angle);
-            g.DrawString(caption, font, Brushes.White, (this.Width - g.MeasureString(caption, font).Width) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
+            g.DrawString(caption, font, Brushes.White, (this.Width - (g.MeasureString(caption, font).Width - (font.Size / 2))) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
 
         }
 
@@ -86,86 +175,111 @@ namespace Lighting_Interface
 
         public virtual void Buttons_MouseUp(object sender, MouseEventArgs e)
         {
-            if (!moving)
-            {
-                image = Properties.Resources.button_over;
-                if (orient == Orient.Tall)
+
+            state = ButtonState.Hover;
+                if (!moving)
                 {
-                    image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    
+                    if (buttonType == ButtonType.Tall)
+                    {
+                        image = Properties.Resources.button_tall_over;
+                    }
+                    else if (buttonType == ButtonType.Round)
+                    {
+                        image = Properties.Resources.round_button_over;
+                    }
+                    else
+                    {
+                        image = Properties.Resources.button_over;
+                    }
+                    Graphics g = Graphics.FromHwnd(this.Handle);
+                    g.Clear(this.BackColor);
+                    g.DrawImage(image, 0, 0, this.Width, this.Height);
+                    g.RotateTransform(angle);
+                    g.DrawString(caption, font, Brushes.LightGray, (this.Width - (g.MeasureString(caption, font).Width - (font.Size / 2))) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
                 }
-                else if (orient == Orient.Round)
-                {
-                    image = Properties.Resources.round_button_over;
-                }
-                Graphics g = Graphics.FromHwnd(this.Handle);
-                g.Clear(this.BackColor);
-                g.DrawImage(image, 0, 0, this.Width, this.Height);
-                g.RotateTransform(angle);
-                g.DrawString(caption, font, Brushes.White, (this.Width - g.MeasureString(caption, font).Width) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
-            }
+            
         }
 
         protected virtual void Buttons_MouseDown(object sender, MouseEventArgs e)
         {
-            if (!moving)
-            {
-                image = Properties.Resources.button_click;
-                if (orient == Orient.Tall)
+            state = ButtonState.Click;
+                if (!moving)
                 {
-                    image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                   
+                    if (buttonType == ButtonType.Tall)
+                    {
+                        image = Properties.Resources.button_tall_click;
+                    }
+                    else if (buttonType == ButtonType.Round)
+                    {
+                        image = Properties.Resources.round_button_click;
+                    }
+                    else
+                    {
+                        image = Properties.Resources.button_click;
+                    }
+                    Graphics g = Graphics.FromHwnd(this.Handle);
+                    g.Clear(this.BackColor);
+                    g.DrawImage(image, 0, 0, this.Width, this.Height);
+                    g.RotateTransform(angle);
+                    g.DrawString(caption, font, Brushes.DimGray, (this.Width - (g.MeasureString(caption, font).Width - (font.Size / 2))) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
                 }
-                else if (orient == Orient.Round)
-                {
-                    image = Properties.Resources.round_button_click;
-                }
-                Graphics g = Graphics.FromHwnd(this.Handle);
-                g.Clear(this.BackColor);
-                g.DrawImage(image, 0, 0, this.Width, this.Height);
-                g.RotateTransform(angle);
-                g.DrawString(caption, font, Brushes.White, (this.Width - g.MeasureString(caption, font).Width) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
-            }
+            
         }
 
         void Buttons_MouseLeave(object sender, EventArgs e)
         {
-            if (!moving)
-            {
-                image = Properties.Resources.button;
-                if (orient == Orient.Tall)
+            state = ButtonState.Normal;
+                if (!moving)
                 {
-                    image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    
+                    if (buttonType == ButtonType.Tall)
+                    {
+                        image = Properties.Resources.button_tall;
+                    }
+                    else if (buttonType == ButtonType.Round)
+                    {
+                        image = Properties.Resources.round_button;
+                    }
+                    else
+                    {
+                        image = Properties.Resources.button;
+                    }
+                    Graphics g = Graphics.FromHwnd(this.Handle);
+                    g.Clear(this.BackColor);
+                    g.DrawImage(image, 0, 0, this.Width, this.Height);
+                    g.RotateTransform(angle);
+                    g.DrawString(caption, font, Brushes.White, (this.Width - (g.MeasureString(caption, font).Width - (font.Size / 2))) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
                 }
-                else if (orient == Orient.Round)
-                {
-                    image = Properties.Resources.round_button;
-                }
-                Graphics g = Graphics.FromHwnd(this.Handle);
-                g.Clear(this.BackColor);
-                g.DrawImage(image, 0, 0, this.Width, this.Height);
-                g.RotateTransform(angle);
-                g.DrawString(caption, font, Brushes.White, (this.Width - g.MeasureString(caption, font).Width) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
-            }
+            
         }
 
         void Buttons_MouseEnter(object sender, EventArgs e)
         {
-            if (!moving)
-            {
-                image = Properties.Resources.button_over;
-                if (orient == Orient.Tall)
+            state = ButtonState.Hover;
+                if (!moving)
                 {
-                    image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    
+                    if (buttonType == ButtonType.Tall)
+                    {
+                        image = Properties.Resources.button_tall_over;
+                    }
+                    else if (buttonType == ButtonType.Round)
+                    {
+                        image = Properties.Resources.round_button_over;
+                    }
+                    else
+                    {
+                        image = Properties.Resources.button_over;
+                    }
+                    Graphics g = Graphics.FromHwnd(this.Handle);
+                    g.Clear(this.BackColor);
+                    g.DrawImage(image, 0, 0, this.Width, this.Height);
+                    g.RotateTransform(angle);
+                    g.DrawString(caption, font, Brushes.LightGray, (this.Width - (g.MeasureString(caption, font).Width - (font.Size / 2))) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
                 }
-                else if (orient == Orient.Round)
-                {
-                    image = Properties.Resources.round_button_over;
-                }
-                Graphics g = Graphics.FromHwnd(this.Handle);
-                g.Clear(this.BackColor);
-                g.DrawImage(image, 0, 0, this.Width, this.Height);
-                g.RotateTransform(angle);
-                g.DrawString(caption, font, Brushes.White, (this.Width - g.MeasureString(caption, font).Width) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
-            }
+            
         }
         public string Caption
         {
@@ -180,7 +294,7 @@ namespace Lighting_Interface
                 g.Clear(this.BackColor);
                 g.DrawImage(image, 0, 0, this.Width, this.Height);
                 g.RotateTransform(angle);
-                g.DrawString(caption, font, Brushes.White, (this.Width - g.MeasureString(caption, font).Width) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
+                g.DrawString(caption, font, Brushes.White, (this.Width - (g.MeasureString(caption, font).Width - (font.Size / 2))) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
             }
         }
         public Font CaptionFont
@@ -194,31 +308,26 @@ namespace Lighting_Interface
                 font = value;
             }
         }
-        public Orient Orientation
+        public ButtonType Type
         {
             get
             {
-                return orient;
+                return buttonType;
             }
             set
             {
-                orient = value;
-                switch (orient)
+                buttonType = value;
+                switch (buttonType)
                 {
-                    case Orient.Tall:
-                        image = Properties.Resources.button;
-                        image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                        int w = this.Width;
-                        int h = this.Height;
-                        this.Width = h;
-                        this.Height = w;
-                        angle = 90;
+                    case ButtonType.Tall:
+                        image = Properties.Resources.button_tall;
+                        angle = 180;
                         break;
-                    case Orient.Long:
+                    case ButtonType.Long:
                         image = Properties.Resources.button;
                         angle = 0;
                         break;
-                    case Orient.Round:
+                    case ButtonType.Round:
                         image = Properties.Resources.round_button;
                         angle = 0;
                         break;
@@ -231,13 +340,17 @@ namespace Lighting_Interface
                 g.DrawImage(image, 0, 0, this.Width, this.Height);
                 g.RotateTransform(angle);
                 g.DrawString(caption, font, Brushes.White, (this.Width - g.MeasureString(caption, font).Width) / 2, (this.Height - g.MeasureString(caption, font).Height) / 2, StringFormat.GenericTypographic);
-
             }
         }
-        public enum Orient
+        public enum ButtonType
         {
             Tall, Long, Round, Triangle
         };
-        
+        enum ButtonState
+        {
+            Normal,
+            Hover,
+            Click
+        }
     }
 }
