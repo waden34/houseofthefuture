@@ -31,3 +31,14 @@ C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Movie Library\obj\Debug\Movie Library.csproj.GenerateResource.Cache
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Movie Library\obj\Debug\Movie Library.exe
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Movie Library\obj\Debug\Movie Library.pdb
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\bin\Debug\Movie Library.exe
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\bin\Debug\Movie Library.pdb
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\bin\Debug\Interop.WMPLib.dll
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\obj\Debug\Interop.WMPLib.dll
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\obj\Debug\Movie Library.csproj.ResolveComReference.cache
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\obj\Debug\Movie_Library.Form1.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\obj\Debug\Movie_Library.Properties.Resources.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\obj\Debug\Movie Library.csproj.GenerateResource.Cache
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\obj\Debug\Movie Library.exe
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Movie Library\obj\Debug\Movie Library.pdb

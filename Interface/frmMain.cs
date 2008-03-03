@@ -28,6 +28,8 @@ namespace Lighting_Interface
         int iCount;
         int id;
         object lockIR;
+        object lockInserts;
+        public bool isInserting;
         public frmMain()
         {
             InitializeComponent();
@@ -60,7 +62,33 @@ namespace Lighting_Interface
                 lblTime.Text = DateTime.Now.ToShortTimeString().Replace(":", " ");
             }
             lblTime.Left = 631 + (panel1.Width - lblTime.Width) / 2;
-
+           if (!isInserting)
+           {
+                isInserting = true;
+                SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
+                SQLiteDataAdapter da = new SQLiteDataAdapter("Select * from pending_inserts;", conn);
+                dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    frmDiscInsert frm = new frmDiscInsert();
+                    frm.database = database;
+                    frm.unit_id = dt.Rows[0]["unit_id"].ToString();
+                    frm.pos = dt.Rows[0]["slot"].ToString();
+                    frm.frmMain = this;
+                    frm.ShowDialog();
+                }
+                else
+                {
+                    isInserting = false;
+                }
+                dt.Dispose();
+                dt = null;
+                da.Dispose();
+                da = null;
+                conn.Dispose();
+                conn = null;
+            }
         }
 
         #region Animation Timers
@@ -161,6 +189,8 @@ namespace Lighting_Interface
             buttons1.Text = "Power On";
             
             lockIR = new object();
+            lockInserts = new object();
+            isInserting = false;
             StreamReader sr = new StreamReader(System.AppDomain.CurrentDomain.BaseDirectory + "lighting.ini");
             string temp = sr.ReadToEnd();
             sr.Close();
