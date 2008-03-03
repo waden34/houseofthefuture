@@ -25,3 +25,18 @@ C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Interface\obj\Release\Interface.csproj.GenerateResource.Cache
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Interface\bin\Release\Lighting Interface.exe
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Interface\bin\Release\Lighting Interface.pdb
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting Interface.exe
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting Interface.pdb
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\bin\Release\Lighting Interface.exe
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\bin\Release\Lighting Interface.pdb
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting_Interface.Buttons.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting_Interface.frmAddActivity.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting_Interface.frmMain.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting_Interface.frmAddDevice.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting_Interface.frmCommands.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting_Interface.frmEditCommand.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting_Interface.inputBox.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting_Interface.Properties.Resources.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Interface.csproj.GenerateResource.Cache
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting_Interface.frmDiscInsert.resources

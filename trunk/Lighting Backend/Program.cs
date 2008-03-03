@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*
+ * Copyright (C) 2008 Jeremiah Johnson
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +24,7 @@ using System.Data.SQLite;
 using ControlThink.ZWave;
 using System.IO;
 
-namespace Lighting_Backend
+namespace House_of_the_Future
 {
     class Program
     {
@@ -15,6 +33,10 @@ namespace Lighting_Backend
         static ZWaveController controller;
         static DateTime dbUpdated;
         static string database;
+        static DiskStakkaManager manager;
+        static string path;
+        static USBSharp myUsb;
+        //static FileStream fs;
 
         class state
         {
@@ -27,13 +49,19 @@ namespace Lighting_Backend
             sr.Close();
             sr.Dispose();
             sr = null;
-            temp = null;
+            
             database = temp.Substring(temp.IndexOf("database") + 9, temp.IndexOf("\r", temp.IndexOf("database")) - temp.IndexOf("database") - 9).Trim();
+            temp = null;
+            myUsb = new USBSharp();
 
+            find_stakka();
+                        
             IsUpdating = new object();
             dbUpdated = DateTime.Now;
             state state = new state();
             System.Threading.TimerCallback timerDelegate = new System.Threading.TimerCallback(timer_tick);
+            
+
             controller = new ZWaveController();
             controller.Connect();
             for (int i = 0; i < controller.Devices.Count; i++)
@@ -179,5 +207,66 @@ namespace Lighting_Backend
                 info = null;
             }
         }
+
+        static void find_stakka()
+        {
+            int my_device_count = 0;
+            string my_device_path = string.Empty;
+
+            using (USBSharp myUsb = new USBSharp())
+            {
+                myUsb.CT_HidGuid();
+                myUsb.CT_SetupDiGetClassDevs();
+
+                int result = -1;
+                int device_count = 0;
+                int size = 0;
+                int requiredSize = 0;
+
+                while (result != 0)
+                {
+                    result = myUsb.CT_SetupDiEnumDeviceInterfaces(device_count);
+                    int resultb = myUsb.CT_SetupDiGetDeviceInterfaceDetail(ref requiredSize, 0);
+                    size = requiredSize;
+                    resultb = myUsb.CT_SetupDiGetDeviceInterfaceDetailx(ref requiredSize, size);
+
+                    if (myUsb.DevicePathName.IndexOf("vid_0718&pid_d000") > 0)
+                    {
+                        my_device_count = device_count;
+                        path = myUsb.DevicePathName;
+                        break;
+                    }
+                    device_count++;
+                }
+
+                if (path == string.Empty)
+                {
+                    Exception devNotFound = new Exception(@"Device could not be found.");
+                    throw (devNotFound);
+                }
+            }
+
+            if (path != string.Empty)
+            {
+
+                myUsb.CT_CreateFile(path);
+                int myPtrToPreparsedData = -1;
+                if (myUsb.CT_HidD_GetPreparsedData(myUsb.HidHandle, ref myPtrToPreparsedData) != 0)
+                {
+                    int code = myUsb.CT_HidP_GetCaps(myPtrToPreparsedData);
+                    int reportLength = myUsb.myHIDP_CAPS.InputReportByteLength;
+                    manager = new DiskStakkaManager(path);
+                    manager.database = database;
+                    System.Threading.ThreadStart job = new System.Threading.ThreadStart(manager.start);
+                    System.Threading.Thread t = new System.Threading.Thread(job);
+                    t.Start();
+
+
+
+                }
+            }
+     
+        }
+
     }
 }
