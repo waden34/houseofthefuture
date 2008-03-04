@@ -12,7 +12,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-namespace RectTrackerSharp
+namespace HouseOfTheFuture
 {
 	/// <summary>
 	/// Summary description for RectTracker.

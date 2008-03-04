@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Lighting_Interface
+namespace HouseOfTheFuture
 {
     public partial class inputBox : Form
     {

@@ -11,7 +11,7 @@ using System.Data.SQLite;
 using System.Net;
 using System.Net.Sockets;
 
-namespace Lighting_Interface
+namespace HouseOfTheFuture
 {
     public partial class frmMain : Form
     {

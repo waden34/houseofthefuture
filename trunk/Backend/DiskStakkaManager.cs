@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace House_of_the_Future
+namespace HouseOfTheFuture
 {
     public class DiskStakkaManager
     {

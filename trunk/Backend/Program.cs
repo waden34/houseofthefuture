@@ -25,7 +25,7 @@ using ControlThink.ZWave;
 using System.IO;
 using Microsoft.Win32;
 
-namespace House_of_the_Future
+namespace HouseOfTheFuture
 {
     class Program
     {
@@ -78,6 +78,7 @@ namespace House_of_the_Future
             public System.Threading.Timer timer;
         }
         #endregion
+
         /// <summary>
         /// Main Program Loop
         /// </summary>
@@ -268,6 +269,7 @@ namespace House_of_the_Future
             }
             input = null;
         }
+
         /// <summary>
         /// Fires when a ZWave device level gets changed
         /// </summary>
@@ -299,6 +301,7 @@ namespace House_of_the_Future
                 conn = null;
             }
         }
+        
         /// <summary>
         /// Timer that checks the database for changes
         /// </summary>
@@ -430,7 +433,10 @@ namespace House_of_the_Future
                 }
             }
         }
-        //Find the HID handle for the Disk Stakka tower
+        
+        /// <summary>
+        /// Find the HID handle for the Disk Stakka tower
+        /// </summary>
         static void find_stakka()
         {
             //Create a new USB Controller

@@ -1,4 +1,4 @@
-﻿namespace Lighting_Interface
+﻿namespace HouseOfTheFuture
 {
     partial class frmEditCommand
     {

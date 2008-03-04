@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
-namespace Lighting_Interface
+namespace HouseOfTheFuture
 {
     public partial class frmEditCommand : Form
     {
