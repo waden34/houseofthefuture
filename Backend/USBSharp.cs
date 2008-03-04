@@ -21,7 +21,7 @@ using System;
 using System.Runtime.InteropServices;
 //using System.Windows.Forms;
 
-namespace House_of_the_Future
+namespace HouseOfTheFuture
 {
 	public class USBSharp : IDisposable
 	{

@@ -8,8 +8,8 @@
     <ProjectGuid>{E75A3C02-21C7-4FF3-A253-83857B5FDDFA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lighting_Interface</RootNamespace>
-    <AssemblyName>Lighting Interface</AssemblyName>
+    <RootNamespace>HouseOfTheFuture</RootNamespace>
+    <AssemblyName>Interface</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

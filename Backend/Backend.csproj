@@ -8,8 +8,8 @@
     <ProjectGuid>{5EB2AC58-5E4E-47C6-9971-D1973F5FA2EA}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lighting_Backend</RootNamespace>
-    <AssemblyName>Lighting Backend</AssemblyName>
+    <RootNamespace>HouseOfTheFuture</RootNamespace>
+    <AssemblyName>Backend</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

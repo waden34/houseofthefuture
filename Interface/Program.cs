@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Lighting_Interface
+namespace HouseOfTheFuture
 {
     static class Program
     {

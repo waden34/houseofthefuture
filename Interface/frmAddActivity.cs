@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
-namespace Lighting_Interface
+namespace HouseOfTheFuture
 {
     public partial class frmAddActivity : Form
     {
@@ -18,9 +18,7 @@ namespace Lighting_Interface
         List<string> device_ids;
         List<string> devices;
         string activity_id;
-        Point loc;
-        bool isMoving;
-        RectTrackerSharp.RectTracker CSharpTracker;
+        RectTracker CSharpTracker;
         public frmAddActivity()
         {
             InitializeComponent();
@@ -292,7 +290,7 @@ namespace Lighting_Interface
             ((Buttons)sender).Capture = false;
             if (this.Controls.Contains(CSharpTracker))
                 this.Controls.Remove(CSharpTracker);
-            CSharpTracker = new RectTrackerSharp.RectTracker(((Buttons)sender));
+            CSharpTracker = new RectTracker(((Buttons)sender));
 
             this.Controls.Add(CSharpTracker);
             CSharpTracker.BringToFront();
