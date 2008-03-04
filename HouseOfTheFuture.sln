@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface", "Interface\Inte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "Lighting Backend\Backend.csproj", "{5EB2AC58-5E4E-47C6-9971-D1973F5FA2EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movie Library", "Movie Library\Movie Library.csproj", "{7852CD81-0C34-4F92-87B5-589C4EB9E5D6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,10 +18,6 @@ Global
 		{5EB2AC58-5E4E-47C6-9971-D1973F5FA2EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EB2AC58-5E4E-47C6-9971-D1973F5FA2EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EB2AC58-5E4E-47C6-9971-D1973F5FA2EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7852CD81-0C34-4F92-87B5-589C4EB9E5D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7852CD81-0C34-4F92-87B5-589C4EB9E5D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7852CD81-0C34-4F92-87B5-589C4EB9E5D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7852CD81-0C34-4F92-87B5-589C4EB9E5D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

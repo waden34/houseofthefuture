@@ -1,0 +1,6 @@
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Lighting Backend\bin\Debug\Lighting Backend.exe
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Lighting Backend\bin\Debug\Lighting Backend.pdb
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Lighting Backend\bin\Debug\ControlThink.ZWave.xml
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Lighting Backend\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Lighting Backend\obj\Debug\Lighting Backend.exe
+C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Lighting Backend\obj\Debug\Lighting Backend.pdb
