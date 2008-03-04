@@ -178,7 +178,7 @@ namespace House_of_the_Future
         {
             timeoutCount = 0;
 
-            if ((messageID != 0xFF) && (sentPacket[2] != buf[2]))
+            if (((messageID != 0xFF) && (sentPacket[2] != buf[2])) && buf[3] != 0 && buf[3] != 6)
             {
                 /*if (myLogger != NULL)
                 {
@@ -251,6 +251,7 @@ namespace House_of_the_Future
                     doWrite(CODE_CLEAR_ERROR);
                     break;
                 default:
+                    state = (int)state_t.STATE_CLEAR_ERRORS;
                     /*if (myLogger != NULL)
                     {
                         ERR(myLogger, "Unknown state! %d", state);
@@ -303,6 +304,7 @@ namespace House_of_the_Future
                     break;
 
                 default:
+                    state = (int)state_t.STATE_CLEAR_ERRORS;
                     break;
                 //if (myLogger != NULL)
                 //{
@@ -339,10 +341,16 @@ namespace House_of_the_Future
 
             if (isCDRemoved(buf))
             {
+                
                 mutex.WaitOne();
                 pendingEjects.RemoveAt(0);
-                mutex.ReleaseMutex();
-
+                try
+                {
+                    mutex.ReleaseMutex();
+                }
+                catch
+                {
+                }
                 byte pos = (byte)(buf[4] - 1);
                 slotOccupied[pos] = false;
                 state = (int)state_t.STATE_CLEAR_ERRORS;

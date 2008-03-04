@@ -495,7 +495,7 @@ namespace Lighting_Interface
                     System.Threading.Thread.Sleep(1000);
                 }
             }
-            da = new SQLiteDataAdapter("select x,y,width,height,type,display_name, ir_commands.device_id, ir_commands.command_id from activity_buttons join ir_commands on ir_commands.command_id = activity_buttons.command_id where activity_id = " + activity + ";", conn);
+            da = new SQLiteDataAdapter("select x,y,width,height,type, ifnull(display_name,\' \') as display_name, activity_buttons.device_id, activity_buttons.command_id from activity_buttons left outer join ir_commands on ir_commands.command_id = activity_buttons.command_id where activity_id = " + activity + ";", conn);
             dt = new DataTable();
             da.Fill(dt);
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -509,8 +509,16 @@ namespace Lighting_Interface
                 button.Tag = dt.Rows[i]["device_id"].ToString();
                 button.Width = int.Parse(dt.Rows[i]["width"].ToString());
                 button.Height = int.Parse(dt.Rows[i]["height"].ToString());
-                button.MouseDown += new MouseEventHandler(button_MouseDown);
-                button.MouseUp += new MouseEventHandler(button_MouseUp);
+                string m = dt.Rows[i]["command_id"].ToString();
+                if (dt.Rows[i]["device_id"].ToString() == "-99")
+                {
+                    button.Click += new EventHandler(button_Click);
+                }
+                else
+                {
+                    button.MouseDown += new MouseEventHandler(button_MouseDown);
+                    button.MouseUp += new MouseEventHandler(button_MouseUp);
+                }
                 panelActivities.Controls.Add(button);
                 button.Invalidate();
             }
@@ -520,6 +528,114 @@ namespace Lighting_Interface
             da = null;
             conn.Dispose();
             conn = null;
+        }
+
+        void button_Click(object sender, EventArgs e)
+        {
+            foreach (Control ctl in panelActivities.Controls)
+            {
+                if (ctl.GetType() != typeof(Buttons))
+                {
+                    panelActivities.Controls.Remove(ctl);
+                }
+            }
+            SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
+            SQLiteDataAdapter da = new SQLiteDataAdapter("Select distinct disc_id, movie_id, title, cover, num_discs, unit_id, slot, ejected from discs;", conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            int x = 10;
+            int y = 10;
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                PictureBox pb = new PictureBox();
+                MemoryStream ms = new MemoryStream((byte[])dt.Rows[i]["cover"]);
+                pb.Image = Image.FromStream(ms);
+                panelActivities.Controls.Add(pb);
+                pb.Left = x;
+                pb.Top = y;
+                pb.Tag = dt.Rows[i]["unit_id"].ToString() + "," + dt.Rows[i]["slot"].ToString();
+                pb.SizeMode = PictureBoxSizeMode.AutoSize;
+                pb.Name = dt.Rows[i]["ejected"].ToString();
+                pb.Click += new EventHandler(eject_disc);
+                Label lbl = new Label();
+                lbl.ForeColor = Color.White;
+                lbl.Font = new Font("Verdana", 10);
+                lbl.Text = dt.Rows[i]["title"].ToString();
+                lbl.TextAlign = ContentAlignment.MiddleCenter;
+                lbl.Left = x;
+                lbl.Top = y + 150;
+                if (lbl.Text.Length > 10)
+                {
+                    string temp = lbl.Text.Substring(0, 10);
+                    for (int j = 10; j < lbl.Text.Length; j++)
+                    {
+                        if (lbl.Text.Substring(j, 1) == " ")
+                        {
+                            temp += "\r\n";
+                            if (Math.Abs(10 - j) + 20 > lbl.Text.Length)
+                            {
+                                temp += lbl.Text.Substring(j + 1);
+                                break;
+                            }
+                            else
+                            {
+                                j += (10 - j);
+                            }
+                        }
+                        else
+                        {
+                            temp += lbl.Text.Substring(j, 1);
+                        }
+                    }
+                    lbl.Text = temp;
+                    temp = null;
+                }
+                lbl.AutoSize = true;
+                panelActivities.Controls.Add(lbl);
+                if (x + pb.Width + 10 > panelActivities.Width)
+                {
+                    x = 10;
+                    y += 180;
+                }
+                else
+                {
+                    x = x + pb.Width + 10;
+                }
+                ms.Close();
+                ms.Dispose();
+                ms = null;
+                
+
+            }
+            dt.Dispose();
+            dt = null;
+            da.Dispose();
+            da = null;
+            conn.Dispose();
+            conn = null;
+        }
+
+        void eject_disc(object sender, EventArgs e)
+        {
+            if (((PictureBox)sender).Name == "1")
+            {
+                MessageBox.Show("Disc has already been ejected.\r\nPlease find it.");
+                return;
+            }
+            string unit_id = ((PictureBox)sender).Tag.ToString();
+            unit_id = unit_id.Substring(0,unit_id.IndexOf(","));
+            string pos = ((PictureBox)sender).Tag.ToString();
+            pos = pos.Substring(pos.IndexOf(",") + 1);
+            SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
+            SQLiteDataAdapter da = new SQLiteDataAdapter("insert into pending_ejects values (" + unit_id + "," + pos + ");", conn);
+            da.Fill(new DataTable());
+            da = new SQLiteDataAdapter("update discs set ejected = 1 where unit_id = " + unit_id + " and slot = " + pos + ";", conn);
+            da.Fill(new DataTable());
+            da.Dispose();
+            da = null;
+            conn.Dispose();
+            conn = null;
+            button_Click(null, null);
         }
 
         void button_MouseUp(object sender, MouseEventArgs e)

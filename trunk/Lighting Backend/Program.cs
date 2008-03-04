@@ -36,6 +36,7 @@ namespace House_of_the_Future
         static DiskStakkaManager manager;
         static string path;
         static USBSharp myUsb;
+        static int id = 0;
 
         class state
         {
@@ -195,6 +196,22 @@ namespace House_of_the_Future
                             ex = null;
                         }
                     }
+                    da = new SQLiteDataAdapter("select * from pending_ejects;", conn);
+                    dt = new System.Data.DataTable();
+                    da.Fill(dt);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        List<DiskStakka.Command> commands = new List<DiskStakka.Command>();
+                        DiskStakka.Command command = new DiskStakka.Command();
+                        command.command = 1;
+                        command.opid = id;
+                        command.slot = int.Parse(dt.Rows[i]["slot"].ToString());
+                        commands.Add(command);
+                        manager.setCommand(1, int.Parse(dt.Rows[i]["unit_id"].ToString()), commands);
+                        id++;
+                    }
+                    da = new SQLiteDataAdapter("delete from pending_ejects;", conn);
+                    da.Fill(dt);
                     dt.Dispose();
                     dt = null;
                     da.Dispose();
