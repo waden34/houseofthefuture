@@ -252,7 +252,7 @@ namespace Lighting_Interface
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<string> devices = new List<string>();
-            ComboBox.ObjectCollection items = new ComboBox.ObjectCollection(new ComboBox());
+            List<string> items = new List<string>();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 items.Add(dt.Rows[i]["manufacturer"].ToString() + " " + dt.Rows[i]["type"].ToString() + " - " + dt.Rows[i]["model"].ToString());
@@ -263,7 +263,7 @@ namespace Lighting_Interface
 
             devices = new List<string>();
 
-            items = new ComboBox.ObjectCollection(new ComboBox());
+            items = new List<string>();
             da = new SQLiteDataAdapter("Select long_name, command_id, display_name from ir_commands where device_id = " + result.device_id + ";", conn);
             dt = new DataTable();
             da.Fill(dt);
@@ -276,8 +276,6 @@ namespace Lighting_Interface
             button.Tag += "," + result.device_id;
             button.Caption = result.Text;
             button.MouseDown += new MouseEventHandler(Buttons_MouseDown);
-            button.MouseUp += new MouseEventHandler(Buttons_MouseUp);
-            button.MouseMove += new MouseEventHandler(Buttons_MouseMove);
             this.Controls.Add(button);
             items = null;
             dt.Dispose();
@@ -286,24 +284,6 @@ namespace Lighting_Interface
             da = null;
             conn.Dispose();
             conn = null;
-        }
-
-        void Buttons_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isMoving)
-            {
-                Point newLoc = new Point();
-                newLoc = this.PointToClient(MousePosition);
-                newLoc.Offset(-loc.X, -loc.Y);
-                ((Buttons)sender).Location = newLoc;
-                //((Buttons)sender).Location = new Point(e.Location.X, e.Location.Y);
-            }
-        }
-
-        protected virtual void Buttons_MouseUp(object sender, MouseEventArgs e)
-        {
-            isMoving = false;
-            //((Buttons)sender).Invalidate();
         }
 
         protected virtual void Buttons_MouseDown(object sender, MouseEventArgs e)
@@ -328,6 +308,36 @@ namespace Lighting_Interface
         private void tallButtonToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddButton(Buttons.ButtonType.Tall);
+        }
+
+        private void discBrowserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Buttons button = new Buttons();
+            button.Type = Buttons.ButtonType.Long;
+            SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
+            SQLiteDataAdapter da = new SQLiteDataAdapter("Select disc_type, type from disc_types;", conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<string> types = new List<string>();
+            List<string> ids = new List<string>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                types.Add(dt.Rows[i]["type"].ToString());
+                ids.Add(dt.Rows[i]["disc_type"].ToString());
+            }
+            InputResult result = inputBox.getInput("What type of disc will you browse for?", types, ids);
+            button.Tag = "-99," + result.device_id;
+
+            result = inputBox.getInput("What caption do you want on the button?");
+            button.Caption = result.Text;
+            button.MouseDown += new MouseEventHandler(Buttons_MouseDown);
+            da = new SQLiteDataAdapter("insert into ir_commands values (null," + button.Tag.ToString().Substring(button.Tag.ToString().IndexOf(",") + 1) + ",\'" + result.Text + "\',\'" + result.Text + "\',-99,0,0,0,0);", conn);
+            da.Fill(new DataTable());
+            da = new SQLiteDataAdapter("select max(command_id) as id from ir_commands;", conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            button.Tag = "-99," + dt.Rows[0]["id"].ToString();
+            this.Controls.Add(button);
         }
     }
 }

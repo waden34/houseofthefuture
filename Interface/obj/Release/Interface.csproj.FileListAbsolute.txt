@@ -43,3 +43,5 @@ C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Inte
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Interface\obj\Release\Lighting_Interface.frmAddDisc.resources
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Interface\obj\Release\Lighting_Interface.frmDiscInsert.resources
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Interface\obj\Release\RectTrackerSharp.RectTracker.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\Lighting_Interface.frmAddDisc.resources
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Interface\obj\Release\RectTrackerSharp.RectTracker.resources

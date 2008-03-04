@@ -17,7 +17,7 @@ namespace Lighting_Interface
             InitializeComponent();
         }
         
-        public static InputResult getInput(string prompt, ComboBox.ObjectCollection items)
+        public static InputResult getInput(string prompt, List<string> items)
         {
             using (inputBox frm = new inputBox())
             {
@@ -42,7 +42,7 @@ namespace Lighting_Interface
             }
            
         }
-        public static InputResult getInput(string prompt, ComboBox.ObjectCollection items, List<string> devices)
+        public static InputResult getInput(string prompt, List<string> items, List<string> devices)
         {
             using (inputBox frm = new inputBox())
             {
@@ -74,11 +74,13 @@ namespace Lighting_Interface
             {
                 frm.lblTitle.Text = prompt;
                 frm.txtInput.Visible = true;
+                frm.lblTitle.Left = (frm.Width - frm.lblTitle.Width) / 2;
+
                 DialogResult result = frm.ShowDialog();
                 InputResult retVal = new InputResult();
                 if (result == DialogResult.OK)
                 {
-                    retVal.Text = frm.comboBox1.Text;
+                    retVal.Text = frm.txtInput.Text;
                 }
                 else
                 {
@@ -86,6 +88,11 @@ namespace Lighting_Interface
                 }
                 return retVal;
             }
+
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
 
         }
     }
