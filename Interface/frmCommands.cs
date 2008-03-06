@@ -60,6 +60,30 @@ namespace HouseOfTheFuture
                     {
                         iTop += 30;
                     }
+                    if (lbl.Top > (this.Height - 20) && !this.Controls.ContainsKey("scrollup"))
+                    {
+                        Buttons button = new Buttons();
+                        button.Type = Buttons.ButtonType.TriangleUp;
+                        button.Width = 40;
+                        button.Height = 20;
+                        button.Left = ((this.Width - button.Width) / 2);
+                        button.Top = 30;
+                        button.Name = "scrollup";
+                        button.Click += new EventHandler(ScrollPanel);
+                        this.Controls.Add(button);
+
+                        button = new Buttons();
+                        button.Type = Buttons.ButtonType.TriangleDown;
+                        button.Width = 40;
+                        button.Height = 20;
+                        button.Left = ((this.Width - button.Width) / 2);
+                        button.Top = this.Height - 30;
+                        button.Name = "scrolldown";
+                        button.Click += new EventHandler(ScrollPanel);
+                        this.Controls.Add(button);
+                        button = null;
+                    }
+                    lbl = null;
                 }
             }
 
@@ -120,6 +144,33 @@ namespace HouseOfTheFuture
 
             this.Dispose();
 
+        }
+
+        /// <summary>
+        /// Scroll the controls on a panel
+        /// </summary>
+        void ScrollPanel(object sender, EventArgs e)
+        {
+            if (((Buttons)sender).Name == "scrollup")
+            {
+                foreach (Control ctl in (((Buttons)sender).Parent.Controls))
+                {
+                    if (ctl.GetType() == typeof(Label))
+                    {
+                        ((Label)ctl).Top -= 60;
+                    }
+                }
+            }
+            else if (((Buttons)sender).Name == "scrolldown")
+            {
+                foreach (Control ctl in (((Buttons)sender).Parent.Controls))
+                {
+                    if (ctl.GetType() == typeof(Label))
+                    {
+                        ((Label)ctl).Top += 60;
+                    }
+                }
+            }
         }
     }
 }

@@ -81,6 +81,27 @@ namespace HouseOfTheFuture.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap button_square {
+            get {
+                object obj = ResourceManager.GetObject("button_square", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_square_click {
+            get {
+                object obj = ResourceManager.GetObject("button_square_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_square_over {
+            get {
+                object obj = ResourceManager.GetObject("button_square_over", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap button_tall {
             get {
                 object obj = ResourceManager.GetObject("button_tall", resourceCulture);
@@ -98,6 +119,90 @@ namespace HouseOfTheFuture.Properties {
         internal static System.Drawing.Bitmap button_tall_over {
             get {
                 object obj = ResourceManager.GetObject("button_tall_over", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle_click {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle_down {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle_down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle_down_click {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle_down_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle_down_over {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle_down_over", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle_left {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle_left", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle_left_click {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle_left_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle_left_over {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle_left_over", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle_over {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle_over", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle_right {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle_right_click {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle_right_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap button_triangle_right_over {
+            get {
+                object obj = ResourceManager.GetObject("button_triangle_right_over", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

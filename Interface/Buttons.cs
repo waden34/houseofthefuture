@@ -32,21 +32,36 @@ namespace HouseOfTheFuture
             this.Paint += new PaintEventHandler(Buttons_Paint);
             switch (buttonType)
             {
-                case ButtonType.Long:
+                case ButtonType.Horizontal:
                     image = Properties.Resources.button;
                     break;
                 case ButtonType.Round:
                     image = Properties.Resources.round_button;
                     break;
-                case ButtonType.Tall:
+                case ButtonType.Verticle:
                     image = Properties.Resources.button_tall;
+                    break;
+                case ButtonType.TriangleDown:
+                    image = Properties.Resources.button_triangle_down;
+                    break;
+                case ButtonType.TriangleLeft:
+                    image = Properties.Resources.button_triangle_left;
+                    break;
+                case ButtonType.TriangleRight:
+                    image = Properties.Resources.button_triangle_right;
+                    break;
+                case ButtonType.TriangleUp:
+                    image = Properties.Resources.button_triangle;
                     break;
                 default:
                     image = Properties.Resources.button;
                     break;
 
             }
-            
+            if (caption == null)
+            {
+                caption = " ";
+            }
             this.Resize += new EventHandler(Buttons_Resize);
             Graphics g = Graphics.FromHwnd(this.Handle);
             g.Clear(this.BackColor);
@@ -58,7 +73,7 @@ namespace HouseOfTheFuture
 
         void Buttons_Paint(object sender, PaintEventArgs e)
         {
-            if (buttonType == ButtonType.Tall)
+            if (buttonType == ButtonType.Verticle)
             {
                 switch (state)
                 {
@@ -93,6 +108,78 @@ namespace HouseOfTheFuture
                         break;
                     default:
                         image = Properties.Resources.round_button;
+                        break;
+                }
+            }
+            else if (buttonType == ButtonType.TriangleDown)
+            {
+                switch (state)
+                {
+                    case ButtonState.Normal:
+                        image = Properties.Resources.button_triangle_down;
+                        break;
+                    case ButtonState.Click:
+                        image = Properties.Resources.button_triangle_down_click;
+                        break;
+                    case ButtonState.Hover:
+                        image = Properties.Resources.button_triangle_down_over;
+                        break;
+                    default:
+                        image = Properties.Resources.button_triangle_down;
+                        break;
+                }
+            }
+            else if (buttonType == ButtonType.TriangleLeft)
+            {
+                switch (state)
+                {
+                    case ButtonState.Normal:
+                        image = Properties.Resources.button_triangle_left;
+                        break;
+                    case ButtonState.Click:
+                        image = Properties.Resources.button_triangle_left_click;
+                        break;
+                    case ButtonState.Hover:
+                        image = Properties.Resources.button_triangle_left_over;
+                        break;
+                    default:
+                        image = Properties.Resources.button_triangle_left;
+                        break;
+                }
+            }
+            else if (buttonType == ButtonType.TriangleRight)
+            {
+                switch (state)
+                {
+                    case ButtonState.Normal:
+                        image = Properties.Resources.button_triangle_right;
+                        break;
+                    case ButtonState.Click:
+                        image = Properties.Resources.button_triangle_right_click;
+                        break;
+                    case ButtonState.Hover:
+                        image = Properties.Resources.button_triangle_right_over;
+                        break;
+                    default:
+                        image = Properties.Resources.button_triangle_right;
+                        break;
+                }
+            }
+            else if (buttonType == ButtonType.TriangleUp)
+            {
+                switch (state)
+                {
+                    case ButtonState.Normal:
+                        image = Properties.Resources.button_triangle;
+                        break;
+                    case ButtonState.Click:
+                        image = Properties.Resources.button_triangle_click;
+                        break;
+                    case ButtonState.Hover:
+                        image = Properties.Resources.button_triangle_over;
+                        break;
+                    default:
+                        image = Properties.Resources.button_triangle;
                         break;
                 }
             }
@@ -180,13 +267,29 @@ namespace HouseOfTheFuture
                 if (!moving)
                 {
                     
-                    if (buttonType == ButtonType.Tall)
+                    if (buttonType == ButtonType.Verticle)
                     {
                         image = Properties.Resources.button_tall_over;
                     }
                     else if (buttonType == ButtonType.Round)
                     {
                         image = Properties.Resources.round_button_over;
+                    }
+                    else if (buttonType == ButtonType.TriangleDown)
+                    {
+                        image = Properties.Resources.button_triangle_down_over;
+                    }
+                    else if (buttonType == ButtonType.TriangleLeft)
+                    {
+                        image = Properties.Resources.button_triangle_left_over;
+                    }
+                    else if (buttonType == ButtonType.TriangleRight)
+                    {
+                        image = Properties.Resources.button_triangle_right_over;
+                    }
+                    else if (buttonType == ButtonType.TriangleUp)
+                    {
+                        image = Properties.Resources.button_triangle_over;
                     }
                     else
                     {
@@ -207,13 +310,29 @@ namespace HouseOfTheFuture
                 if (!moving)
                 {
                    
-                    if (buttonType == ButtonType.Tall)
+                    if (buttonType == ButtonType.Verticle)
                     {
                         image = Properties.Resources.button_tall_click;
                     }
                     else if (buttonType == ButtonType.Round)
                     {
                         image = Properties.Resources.round_button_click;
+                    }
+                    else if (buttonType == ButtonType.TriangleDown)
+                    {
+                        image = Properties.Resources.button_triangle_down_click;
+                    }
+                    else if (buttonType == ButtonType.TriangleLeft)
+                    {
+                        image = Properties.Resources.button_triangle_left_click;
+                    }
+                    else if (buttonType == ButtonType.TriangleRight)
+                    {
+                        image = Properties.Resources.button_triangle_right_click;
+                    }
+                    else if (buttonType == ButtonType.TriangleUp)
+                    {
+                        image = Properties.Resources.button_triangle_click;
                     }
                     else
                     {
@@ -234,13 +353,29 @@ namespace HouseOfTheFuture
                 if (!moving)
                 {
                     
-                    if (buttonType == ButtonType.Tall)
+                    if (buttonType == ButtonType.Verticle)
                     {
                         image = Properties.Resources.button_tall;
                     }
                     else if (buttonType == ButtonType.Round)
                     {
                         image = Properties.Resources.round_button;
+                    }
+                    else if (buttonType == ButtonType.TriangleDown)
+                    {
+                        image = Properties.Resources.button_triangle_down;
+                    }
+                    else if (buttonType == ButtonType.TriangleLeft)
+                    {
+                        image = Properties.Resources.button_triangle_left;
+                    }
+                    else if (buttonType == ButtonType.TriangleRight)
+                    {
+                        image = Properties.Resources.button_triangle_right;
+                    }
+                    else if (buttonType == ButtonType.TriangleUp)
+                    {
+                        image = Properties.Resources.button_triangle;
                     }
                     else
                     {
@@ -261,13 +396,29 @@ namespace HouseOfTheFuture
                 if (!moving)
                 {
                     
-                    if (buttonType == ButtonType.Tall)
+                    if (buttonType == ButtonType.Verticle)
                     {
                         image = Properties.Resources.button_tall_over;
                     }
                     else if (buttonType == ButtonType.Round)
                     {
                         image = Properties.Resources.round_button_over;
+                    }
+                    else if (buttonType == ButtonType.TriangleDown)
+                    {
+                        image = Properties.Resources.button_triangle_down_over;
+                    }
+                    else if (buttonType == ButtonType.TriangleLeft)
+                    {
+                        image = Properties.Resources.button_triangle_left_over;
+                    }
+                    else if (buttonType == ButtonType.TriangleRight)
+                    {
+                        image = Properties.Resources.button_triangle_right_over;
+                    }
+                    else if (buttonType == ButtonType.TriangleUp)
+                    {
+                        image = Properties.Resources.button_triangle_over;
                     }
                     else
                     {
@@ -319,16 +470,32 @@ namespace HouseOfTheFuture
                 buttonType = value;
                 switch (buttonType)
                 {
-                    case ButtonType.Tall:
+                    case ButtonType.Verticle:
                         image = Properties.Resources.button_tall;
                         angle = 180;
                         break;
-                    case ButtonType.Long:
+                    case ButtonType.Horizontal:
                         image = Properties.Resources.button;
                         angle = 0;
                         break;
                     case ButtonType.Round:
                         image = Properties.Resources.round_button;
+                        angle = 0;
+                        break;
+                    case ButtonType.TriangleDown:
+                        image = Properties.Resources.button_triangle_down;
+                        angle = 0;
+                        break;
+                    case ButtonType.TriangleLeft:
+                        image = Properties.Resources.button_triangle_left;
+                        angle = 0;
+                        break;
+                    case ButtonType.TriangleRight:
+                        image = Properties.Resources.button_triangle_right;
+                        angle = 0;
+                        break;
+                    case ButtonType.TriangleUp:
+                        image = Properties.Resources.button_triangle;
                         angle = 0;
                         break;
                     default:
@@ -344,7 +511,14 @@ namespace HouseOfTheFuture
         }
         public enum ButtonType
         {
-            Tall, Long, Round, Triangle
+            Verticle, 
+            Horizontal, 
+            Round, 
+            TriangleUp,
+            TriangleRight,
+            TriangleDown,
+            TriangleLeft,
+            Square
         };
         enum ButtonState
         {
@@ -352,5 +526,6 @@ namespace HouseOfTheFuture
             Hover,
             Click
         }
+        
     }
 }

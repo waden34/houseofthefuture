@@ -236,7 +236,7 @@ namespace HouseOfTheFuture
 
         private void longButtonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddButton(Buttons.ButtonType.Long);
+            AddButton(Buttons.ButtonType.Horizontal);
 
         }
 
@@ -305,13 +305,13 @@ namespace HouseOfTheFuture
 
         private void tallButtonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddButton(Buttons.ButtonType.Tall);
+            AddButton(Buttons.ButtonType.Verticle);
         }
 
         private void discBrowserToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons();
-            button.Type = Buttons.ButtonType.Long;
+            button.Type = Buttons.ButtonType.Horizontal;
             SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
             SQLiteDataAdapter da = new SQLiteDataAdapter("Select disc_type, type from disc_types;", conn);
             DataTable dt = new DataTable();
