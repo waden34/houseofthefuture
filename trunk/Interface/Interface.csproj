@@ -169,27 +169,43 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\button.png" />
+    <None Include="Resources\Buttons\button.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\button_click.png" />
+    <None Include="Resources\Buttons\button_click.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\button_over.png" />
+    <None Include="Resources\Buttons\button_over.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\round_button_over.png" />
+    <None Include="Resources\Buttons\round_button_over.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\round_button_click.png" />
+    <None Include="Resources\Buttons\round_button_click.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\round_button.png" />
+    <None Include="Resources\Buttons\round_button.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\button_tall.png" />
-    <Content Include="Resources\button_tall_click.png" />
-    <Content Include="Resources\button_tall_over.png" />
+    <None Include="app.config" />
+    <None Include="Resources\Buttons\button_square.png" />
+    <None Include="Resources\Buttons\button_square_click.png" />
+    <None Include="Resources\Buttons\button_square_over.png" />
+    <Content Include="Resources\Buttons\button_tall.png" />
+    <Content Include="Resources\Buttons\button_tall_click.png" />
+    <Content Include="Resources\Buttons\button_tall_over.png" />
+    <None Include="Resources\Buttons\button_triangle_right_over.png" />
+    <None Include="Resources\Buttons\button_triangle_right_click.png" />
+    <None Include="Resources\Buttons\button_triangle_right.png" />
+    <None Include="Resources\Buttons\button_triangle_left_over.png" />
+    <None Include="Resources\Buttons\button_triangle_left_click.png" />
+    <None Include="Resources\Buttons\button_triangle_left.png" />
+    <None Include="Resources\Buttons\button_triangle_down_over.png" />
+    <None Include="Resources\Buttons\button_triangle_down_click.png" />
+    <None Include="Resources\Buttons\button_triangle_down.png" />
+    <None Include="Resources\Buttons\button_triangle_over.png" />
+    <None Include="Resources\Buttons\button_triangle_click.png" />
+    <None Include="Resources\Buttons\button_triangle.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

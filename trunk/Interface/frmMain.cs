@@ -18,6 +18,34 @@ namespace HouseOfTheFuture
     {
         public frmMain()
         {
+            //Check the registry for settings
+            RegistryKey key = Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
+            if (key == null)
+            {
+                //Create new registry settings if keys not found
+                Console.WriteLine("Creating Registry keys");
+                key = Registry.LocalMachine.CreateSubKey("Software\\House of the Future");
+                key = Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
+                key.SetValue("database", AppDomain.CurrentDomain.BaseDirectory + "\\jHome.jdb");
+                System.Net.IPAddress[] ips = System.Net.Dns.GetHostAddresses(System.Net.Dns.GetHostName());
+                key.SetValue("irCommander", ips[0].ToString());
+                key.SetValue("logLevel", "2");
+                key.SetValue("foreColor", Color.White.ToArgb().ToString());
+                key.SetValue("backColor", Color.SteelBlue.ToArgb().ToString());
+                ips = null;
+            }
+            if (logLevel < 2)
+            {
+                Console.WriteLine("Reading Registry keys");
+            }
+            database = key.GetValue("database").ToString();
+            logLevel = int.Parse(key.GetValue("logLevel").ToString());
+            irCommander = key.GetValue("irCommander").ToString();
+            foreColor = Color.FromArgb(int.Parse(key.GetValue("foreColor").ToString()));
+            backColor = Color.FromArgb(int.Parse(key.GetValue("backColor").ToString()));
+            this.ForeColor = foreColor;
+            this.BackColor = backColor;
+            key = null;
             InitializeComponent();
         }
         #region Variables
@@ -97,6 +125,15 @@ namespace HouseOfTheFuture
         /// </summary>
         delegate void buttonClick(object sender, MouseEventArgs e);
 
+        /// <summary>
+        /// Color to use for all text
+        /// </summary>
+        public Color foreColor;
+
+        /// <summary>
+        /// Color to use for all backgrounds
+        /// </summary>
+        public Color backColor;
         #endregion
 
         #region Timers
@@ -274,7 +311,8 @@ namespace HouseOfTheFuture
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Reposition buttons
-            this.btnActivitySetup.Left = ((this.panelSetup.Width - this.btnActivitySetup.Width) / 2);
+            this.btnActivitySetup.Left = ((this.panelSetup.Width - this.btnActivitySetup.Width) / 3);
+            this.btnGeneralSetup.Left = (((this.panelSetup.Width - this.btnGeneralSetup.Width) / 3) * 2);
             this.btnLightingSetup.Left = (this.panelSetup.Width - this.btnLightingSetup.Width - 11);
             this.btnDeviceSetup.Left = 11;
             this.btnAddDevice.Left = (this.panelSetupDevices.Width - this.btnAddDevice.Width) / 2;
@@ -285,34 +323,13 @@ namespace HouseOfTheFuture
             isInserting = false;
             id = 1;
 
-            //Check the registry for settings
-            RegistryKey key = Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
-            if (key == null)
-            {
-                //Create new registry settings if keys not found
-                Console.WriteLine("Creating Registry keys");
-                key = Registry.LocalMachine.CreateSubKey("Software\\House of the Future");
-                key = Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
-                key.SetValue("database", AppDomain.CurrentDomain.BaseDirectory + "\\jHome.jdb");
-                System.Net.IPAddress[] ips = System.Net.Dns.GetHostAddresses(System.Net.Dns.GetHostName());
-                key.SetValue("irCommander", ips[0].ToString());
-                key.SetValue("logLevel", "2");
-                ips = null;
-            }
-            if (logLevel < 2)
-            {
-                Console.WriteLine("Reading Registry keys");
-            }
-            database = key.GetValue("database").ToString();
-            logLevel = int.Parse(key.GetValue("logLevel").ToString());
-            irCommander = key.GetValue("irCommander").ToString();
-            key = null;
-
+            
+           
             //Setup and connect to the Global Cache unit
             gcSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
-                gcSocket.Connect(irCommander, 4998);
+                //gcSocket.Connect(irCommander, 4998);
             }
             catch
             {
@@ -367,17 +384,22 @@ namespace HouseOfTheFuture
             //Start the animation
             activePanel = "panelDevices";
             timerContentSlider.Enabled = true;
-            
+
+            LoadDevices(panelDevices, contextMenuStrip1, new buttonClick(device_Click));
+        }
+
+        private void LoadDevices(Panel curPanel, ContextMenuStrip menu, buttonClick onClick)
+        {
             //Clean up the panel by removing all old controls
-            for (int i = 0; i < panelDevices.Controls.Count; i++)
+            for (int i = 0; i < curPanel.Controls.Count; i++)
             {
-                panelDevices.Controls.RemoveAt(i);
+                curPanel.Controls.RemoveAt(i);
                 i--;
             }
 
             //Read all the devices from the database
             SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
-            SQLiteDataAdapter da = new SQLiteDataAdapter("Select manufacturer, type, model, device_id from devices join device_type on device_type.type_id = devices.type_id join manufacturer on manufacturer.manufacturer_id = devices.manufacturer_id;", conn);
+            SQLiteDataAdapter da = new SQLiteDataAdapter("Select manufacturer, type, model, emitter_id, device_id from devices join device_type on device_type.type_id = devices.type_id join manufacturer on manufacturer.manufacturer_id = devices.manufacturer_id;", conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             int iTop = 30;
@@ -387,19 +409,22 @@ namespace HouseOfTheFuture
                 Button btn = new Button();
                 btn.Text = dt.Rows[i]["manufacturer"].ToString() + " " + dt.Rows[i]["type"].ToString() + " - " + dt.Rows[i]["model"].ToString();
                 btn.Top = iTop;
-
+                btn.Tag = dt.Rows[i]["device_id"].ToString();
                 btn.Font = new Font("Cooper Black", 10, FontStyle.Regular);
                 btn.Width = 30;
                 btn.FlatStyle = FlatStyle.Flat;
-                btn.ForeColor = Color.White;
-                btn.FlatAppearance.BorderColor = Color.SteelBlue;
+                btn.ForeColor = foreColor;
+                btn.FlatAppearance.BorderColor = backColor;
                 btn.Visible = true;
-                btn.Click += new EventHandler(device_Click);
+                if (onClick != null)
+                {
+                    btn.MouseClick += new MouseEventHandler(onClick);
+                }
                 btn.Name = "btnDevice" + dt.Rows[i]["device_id"].ToString();
                 //Add the context menu to each button
-                btn.ContextMenuStrip = contextMenuStrip1;
-                
-                panelDevices.Controls.Add(btn);
+                btn.ContextMenuStrip = menu;
+
+                curPanel.Controls.Add(btn);
                 btn.AutoSize = true;
                 btn.AutoEllipsis = false;
                 if (i % 2 == 0)
@@ -408,13 +433,46 @@ namespace HouseOfTheFuture
                 }
                 else
                 {
-                    btn.Left = panelDevices.Width - btn.Width - 10;
+                    btn.Left = curPanel.Width - btn.Width - 10;
                 }
                 if (i % 2 > 0)
                 {
-                    iTop += ((panelDevices.Height - 90) / ((dt.Rows.Count - 1) / 2));
+                    iTop += ((curPanel.Height - 90) / ((dt.Rows.Count - 1) / 2));
                 }
+                //btn.Top = 80 + ((i - (i % 2)) * 30);
+                //btn.AutoSize = true;
+                //if (i % 2 == 0)
+                //{
+                //    btn.Left = 30;
+                //}
+                //else
+                //{
+                //    btn.Left = (panelSetupDevices.Width - btn.Width - 30);
+                //}
+                //Add scroll buttons if there are too many activities
+                if (btn.Top > (curPanel.Height - 20) && !curPanel.Controls.ContainsKey("scrollup"))
+                {
+                    Buttons button = new Buttons();
+                    button.Type = Buttons.ButtonType.TriangleUp;
+                    button.Width = 40;
+                    button.Height = 20;
+                    button.Left = ((curPanel.Width - button.Width) / 2);
+                    button.Top = 30;
+                    button.Name = "scrollup";
+                    button.Click += new EventHandler(ScrollPanel);
+                    curPanel.Controls.Add(button);
 
+                    button = new Buttons();
+                    button.Type = Buttons.ButtonType.TriangleDown;
+                    button.Width = 40;
+                    button.Height = 20;
+                    button.Left = ((curPanel.Width - button.Width) / 2);
+                    button.Top = curPanel.Height - 30;
+                    button.Name = "scrolldown";
+                    button.Click += new EventHandler(ScrollPanel);
+                    curPanel.Controls.Add(button);
+                    button = null;
+                }
             }
             dt.Dispose();
             dt = null;
@@ -451,7 +509,7 @@ namespace HouseOfTheFuture
             lbl.Top = 20;
             lbl.Text = model;
             lbl.Font = new Font("Cooper Black", 10, FontStyle.Regular);
-            lbl.ForeColor = Color.White;
+            lbl.ForeColor = foreColor;
             panelDevices.Controls.Add(lbl);
             lbl.AutoSize = true;
             lbl.Left = ((panelDevices.Width - lbl.Width) / 2);
@@ -467,8 +525,8 @@ namespace HouseOfTheFuture
                 btn.Font = new Font("Cooper Black", 10, FontStyle.Regular);
                 btn.Width = 300;
                 btn.FlatStyle = FlatStyle.Flat;
-                btn.ForeColor = Color.White;
-                btn.FlatAppearance.BorderColor = Color.SteelBlue;
+                btn.ForeColor = foreColor;
+                btn.FlatAppearance.BorderColor = backColor;
                 //Store the device in the Tag property to retrieve when the command is clicked
                 btn.Tag = device;
                 btn.Visible = true;
@@ -491,6 +549,30 @@ namespace HouseOfTheFuture
                 if (i % 2 > 0)
                 {
                     iTop += ((panelDevices.Height - 90) / ((dt.Rows.Count - 1) / 2));
+                }
+                //Add scroll buttons if there are too many activities
+                if (btn.Top > (panelDevices.Height - 20) && !panelDevices.Controls.ContainsKey("scrollup"))
+                {
+                    Buttons button = new Buttons();
+                    button.Type = Buttons.ButtonType.TriangleUp;
+                    button.Width = 40;
+                    button.Height = 20;
+                    button.Left = ((panelDevices.Width - button.Width) / 2);
+                    button.Top = 30;
+                    button.Name = "scrollup";
+                    button.Click += new EventHandler(ScrollPanel);
+                    panelDevices.Controls.Add(button);
+
+                    button = new Buttons();
+                    button.Type = Buttons.ButtonType.TriangleDown;
+                    button.Width = 40;
+                    button.Height = 20;
+                    button.Left = ((panelDevices.Width - button.Width) / 2);
+                    button.Top = panelDevices.Height - 30;
+                    button.Name = "scrolldown";
+                    button.Click += new EventHandler(ScrollPanel);
+                    panelDevices.Controls.Add(button);
+                    button = null;
                 }
                 btn = null;
             }
@@ -605,14 +687,6 @@ namespace HouseOfTheFuture
             }
             //Read all activities from the database
             LoadActivities(panelActivities, contextMenuStrip1, new buttonClick(activity_click));
-            
-
-
-                //if (i % 2 > 0)
-                //{
-                //    iTop += (int)((panelActivities.Height - 90) / (float)((dt.Rows.Count - 1) / 2));
-                //}
-
 
         }
 
@@ -731,7 +805,7 @@ namespace HouseOfTheFuture
                     pb.Name = dt.Rows[i]["ejected"].ToString();
                     pb.Click += new EventHandler(eject_disc);
                     Label lbl = new Label();
-                    lbl.ForeColor = Color.White;
+                    lbl.ForeColor = foreColor;
                     lbl.Font = new Font("Verdana", 10);
                     lbl.Text = dt.Rows[i]["title"].ToString();
                     lbl.TextAlign = ContentAlignment.MiddleCenter;
@@ -854,49 +928,7 @@ namespace HouseOfTheFuture
             timerSetupSlider.Enabled = true;
 
             //Load all devices from the database
-            SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
-            SQLiteDataAdapter da = new SQLiteDataAdapter("select manufacturer, type, model, emitter_id, device_id from devices "
-            + "join device_type on device_type.type_id = devices.type_id "
-            + "join manufacturer on manufacturer.manufacturer_id = devices.manufacturer_id;", conn);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-
-            //Create a button for each of the Devices
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                Button btn = new Button();
-
-                btn.Text = dt.Rows[i]["manufacturer"].ToString() + " " + dt.Rows[i]["type"].ToString() + " - " + dt.Rows[i]["model"].ToString();
-                btn.Visible = true;
-                btn.Tag = dt.Rows[i]["device_id"].ToString();
-                btn.Font = new Font("Cooper Black", 10, FontStyle.Regular);
-                btn.Width = 30;
-                btn.FlatStyle = FlatStyle.Flat;
-                btn.ForeColor = Color.White;
-                btn.FlatAppearance.BorderColor = Color.SteelBlue;
-
-                btn.ContextMenuStrip = contextMenuStrip1;
-                panelSetupDevices.Controls.Add(btn);
-                btn.Top = 80 + ((i - (i % 2)) * 30);
-                btn.AutoSize = true;
-                if (i % 2 == 0)
-                {
-                    btn.Left = 30;
-                }
-                else
-                {
-                    btn.Left = (panelSetupDevices.Width - btn.Width - 30);
-                }
-
-                btn = null;
-            }
-            
-            dt.Dispose();
-            dt = null;
-            da.Dispose();
-            da = null;
-            conn.Dispose();
-            conn = null;
+            LoadDevices(panelSetupDevicesContent, contextMenuStrip1, null);
 
         }
         
@@ -909,7 +941,7 @@ namespace HouseOfTheFuture
             timerSetupSlider.Enabled = true;
 
             //Read all activities from the database
-            LoadActivities(panelSetupActivities, null, new buttonClick(editActivity));
+            LoadActivities(panelSetupActivitiesContent, null, new buttonClick(editActivity));
 
 
         }
@@ -925,14 +957,22 @@ namespace HouseOfTheFuture
             SQLiteConnection conn;
             SQLiteDataAdapter da;
             DataTable dt;
-
+            //Clean up the panel by removing old controls
+            for (int i = 0; i < curPanel.Controls.Count; i++)
+            {
+                if (curPanel.Controls[i].GetType() == typeof(Button) && ((Button)curPanel.Controls[i]).Text != "Add Activity")
+                {
+                    curPanel.Controls.RemoveAt(i);
+                }
+            }
             //Load the activities from the database
             conn = new SQLiteConnection("Data Source=" + database);
             da = new SQLiteDataAdapter("select name, activity_id from activities;", conn);
             dt = new DataTable();
             da.Fill(dt);
-
+            
             //Create a button for each activity
+            int iTop = 90;
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 Button btn = new Button();
@@ -943,11 +983,16 @@ namespace HouseOfTheFuture
                 btn.Font = new Font("Cooper Black", 10, FontStyle.Regular);
                 btn.Width = 30;
                 btn.FlatStyle = FlatStyle.Flat;
-                btn.ForeColor = Color.White;
-                btn.FlatAppearance.BorderColor = Color.SteelBlue;
+                btn.ForeColor = foreColor;
+                btn.FlatAppearance.BorderColor = backColor;
                 btn.MouseClick += new MouseEventHandler(onClick);
                 btn.ContextMenuStrip = menu;
                 curPanel.Controls.Add(btn);
+                if ((float)((dt.Rows.Count - 1) / 2) > 0)
+                {
+                    iTop += (int)((curPanel.Height - 90) / (float)((dt.Rows.Count - 1) / 2));
+                }
+                
                 btn.Top = 80 + ((i - (i % 2)) * 30);
                 btn.AutoSize = true;
                 if (i % 2 == 0)
@@ -958,7 +1003,59 @@ namespace HouseOfTheFuture
                 {
                     btn.Left = (curPanel.Width - btn.Width - 30);
                 }
+                
+                //Add scroll buttons if there are too many activities
+                if (btn.Top > (curPanel.Height - 20) && !curPanel.Controls.ContainsKey("scrollup"))
+                {
+                    Buttons button = new Buttons();
+                    button.Type = Buttons.ButtonType.TriangleUp;
+                    button.Width = 40;
+                    button.Height = 20;
+                    button.Left = ((curPanel.Width - button.Width) / 2);
+                    button.Top = 30;
+                    button.Name = "scrollup";
+                    button.Click += new EventHandler(ScrollPanel);
+                    curPanel.Controls.Add(button);
+
+                    button = new Buttons();
+                    button.Type = Buttons.ButtonType.TriangleDown;
+                    button.Width = 40;
+                    button.Height = 20;
+                    button.Left = ((curPanel.Width - button.Width) / 2);
+                    button.Top = curPanel.Height - 30;
+                    button.Name = "scrolldown";
+                    button.Click += new EventHandler(ScrollPanel);
+                    curPanel.Controls.Add(button);
+                    button = null;
+                }
                 btn = null;
+            }
+        }
+
+        /// <summary>
+        /// Scroll the controls on a panel
+        /// </summary>
+        void ScrollPanel(object sender, EventArgs e)
+        {
+            if (((Buttons)sender).Name == "scrollup")
+            {
+                foreach (Control ctl in (((Buttons)sender).Parent.Controls))
+                {
+                    if (ctl.GetType() == typeof(Button))
+                    {
+                        ((Button)ctl).Top -= 60;
+                    }
+                }
+            }
+            else if (((Buttons)sender).Name == "scrolldown")
+            {
+                foreach (Control ctl in (((Buttons)sender).Parent.Controls))
+                {
+                    if (ctl.GetType() == typeof(Button))
+                    {
+                        ((Button)ctl).Top += 60;
+                    }
+                }
             }
         }
 
@@ -1031,6 +1128,113 @@ namespace HouseOfTheFuture
             frm.ShowDialog();
         }
 
+        /// <summary>
+        /// Show the General Setup options
+        /// </summary>
+        void btnSetupGeneral_Click(object sender, System.EventArgs e)
+        {
+            activePanel = "panelSetupGeneral";
+            timerSetupSlider.Enabled = true;
 
+        }
+
+        /// <summary>
+        /// Set the back color for all controls
+        /// </summary>
+        void btnColorBack_Click(object sender, System.EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                backColor = dlg.Color;
+                RegistryKey key = Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
+                key.SetValue("backColor", backColor.ToArgb().ToString());
+                key.Close();
+                key = null;
+                this.BackColor = backColor;
+                this.Invalidate();
+                ColorControls();
+            }
+            dlg.Dispose();
+            dlg = null;
+        }
+
+        /// <summary>
+        /// Change the colors on all controls
+        /// </summary>
+        private void ColorControls()
+        {
+            foreach (Control ctl in this.Controls)
+            {
+                if (ctl.GetType() == typeof(Panel))
+                {
+                    foreach (Control child in ((Panel)ctl).Controls)
+                    {
+                        if (child.GetType() == typeof(Panel))
+                        {
+                            foreach (Control childchild in ((Panel)child).Controls)
+                            {
+                                childchild.ForeColor = foreColor;
+                                childchild.BackColor = backColor;
+                                if (childchild.GetType() == typeof(Button))
+                                {
+                                    
+                                    if (((Button)childchild).Name == "btnColorFore")
+                                    {
+                                        ((Button)childchild).BackColor = foreColor;
+                                    }
+                                    else if (((Button)childchild).Name == "btnColorBack")
+                                    {
+                                    }
+                                    else
+                                    {
+                                        ((Button)childchild).FlatAppearance.BorderColor = backColor;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            child.ForeColor = foreColor;
+                            child.BackColor = backColor;
+                            if (child.GetType() == typeof(Button))
+                            {
+                                ((Button)child).FlatAppearance.BorderColor = backColor;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ctl.ForeColor = foreColor;
+                    ctl.BackColor = backColor;
+                    if (ctl.GetType() == typeof(Button))
+                    {
+                        ((Button)ctl).FlatAppearance.BorderColor = backColor;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set the text color for all controls
+        /// </summary>
+        void btnColorFore_Click(object sender, System.EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                foreColor = dlg.Color;
+                RegistryKey key = Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
+                key.SetValue("foreColor", foreColor.ToArgb().ToString());
+                key.Close();
+                key = null;
+                this.ForeColor = foreColor;
+                this.Invalidate();
+                ColorControls();
+            }
+            dlg.Dispose();
+            dlg = null;
+        }
     }
 }

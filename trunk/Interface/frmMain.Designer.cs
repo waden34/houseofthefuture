@@ -42,20 +42,29 @@
             this.btnLightingSetup = new System.Windows.Forms.Button();
             this.btnActivitySetup = new System.Windows.Forms.Button();
             this.btnDeviceSetup = new System.Windows.Forms.Button();
+            this.btnColorBack = new System.Windows.Forms.Button();
+            this.btnColorFore = new System.Windows.Forms.Button();
             this.panelSetupDevices = new System.Windows.Forms.Panel();
             this.btnAddDevice = new System.Windows.Forms.Button();
+            this.panelSetupDevicesContent = new System.Windows.Forms.Panel();
             this.panelSetupActivities = new System.Windows.Forms.Panel();
             this.btnAddActivity = new System.Windows.Forms.Button();
+            this.panelSetupActivitiesContent = new System.Windows.Forms.Panel();
+            this.panelSetupGeneral = new System.Windows.Forms.Panel();
+            this.btnGeneralSetup = new System.Windows.Forms.Button();
             this.timerContentSlider = new System.Windows.Forms.Timer(this.components);
             this.panelActivities = new System.Windows.Forms.Panel();
             this.panelLighting = new System.Windows.Forms.Panel();
             this.panelDevices = new System.Windows.Forms.Panel();
             this.timerSetupSlider = new System.Windows.Forms.Timer(this.components);
             this.timerLock = new System.Windows.Forms.Timer(this.components);
+            this.lblColorBack = new System.Windows.Forms.Label();
+            this.lblColorFore = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeEmitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.panel1.SuspendLayout();
             this.panelSetup.SuspendLayout();
             this.panelSetupDevices.SuspendLayout();
@@ -65,10 +74,10 @@
             // 
             // btnActivities
             // 
-            this.btnActivities.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btnActivities.FlatAppearance.BorderColor = this.backColor;
             this.btnActivities.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActivities.Font = new System.Drawing.Font("Cooper Black", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActivities.ForeColor = System.Drawing.Color.White;
+            this.btnActivities.ForeColor = this.foreColor;
             this.btnActivities.Location = new System.Drawing.Point(1, 7);
             this.btnActivities.Name = "btnActivities";
             this.btnActivities.Size = new System.Drawing.Size(150, 98);
@@ -90,10 +99,10 @@
             // 
             // btnSetup
             // 
-            this.btnSetup.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btnSetup.FlatAppearance.BorderColor = this.backColor;
             this.btnSetup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSetup.Font = new System.Drawing.Font("Cooper Black", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetup.ForeColor = System.Drawing.Color.White;
+            this.btnSetup.ForeColor = this.foreColor;
             this.btnSetup.Location = new System.Drawing.Point(1, 319);
             this.btnSetup.Name = "btnSetup";
             this.btnSetup.Size = new System.Drawing.Size(150, 98);
@@ -105,10 +114,10 @@
             // 
             // btnDevices
             // 
-            this.btnDevices.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btnDevices.FlatAppearance.BorderColor = this.backColor;
             this.btnDevices.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDevices.Font = new System.Drawing.Font("Cooper Black", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDevices.ForeColor = System.Drawing.Color.White;
+            this.btnDevices.ForeColor = this.foreColor;
             this.btnDevices.Location = new System.Drawing.Point(1, 215);
             this.btnDevices.Name = "btnDevices";
             this.btnDevices.Size = new System.Drawing.Size(150, 98);
@@ -119,10 +128,10 @@
             // 
             // btnLighting
             // 
-            this.btnLighting.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btnLighting.FlatAppearance.BorderColor = this.backColor;
             this.btnLighting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLighting.Font = new System.Drawing.Font("Cooper Black", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLighting.ForeColor = System.Drawing.Color.White;
+            this.btnLighting.ForeColor = this.foreColor;
             this.btnLighting.Location = new System.Drawing.Point(1, 111);
             this.btnLighting.Name = "btnLighting";
             this.btnLighting.Size = new System.Drawing.Size(150, 98);
@@ -135,7 +144,7 @@
             // 
             this.lblTime.AutoSize = true;
             this.lblTime.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.ForeColor = System.Drawing.Color.White;
+            this.lblTime.ForeColor = this.foreColor;
             this.lblTime.Location = new System.Drawing.Point(691, 456);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(0, 16);
@@ -163,6 +172,8 @@
             this.panelSetup.Controls.Add(this.btnDeviceSetup);
             this.panelSetup.Controls.Add(this.panelSetupDevices);
             this.panelSetup.Controls.Add(this.panelSetupActivities);
+            this.panelSetup.Controls.Add(this.panelSetupGeneral);
+            this.panelSetup.Controls.Add(this.btnGeneralSetup);
             this.panelSetup.Location = new System.Drawing.Point(-659, 1);
             this.panelSetup.Name = "panelSetup";
             this.panelSetup.Size = new System.Drawing.Size(658, 480);
@@ -173,10 +184,10 @@
             // btnLightingSetup
             // 
             this.btnLightingSetup.AutoSize = true;
-            this.btnLightingSetup.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btnLightingSetup.FlatAppearance.BorderColor = this.backColor;
             this.btnLightingSetup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLightingSetup.Font = new System.Drawing.Font("Cooper Black", 10F);
-            this.btnLightingSetup.ForeColor = System.Drawing.Color.White;
+            this.btnLightingSetup.ForeColor = this.foreColor;
             this.btnLightingSetup.Location = new System.Drawing.Point(527, 11);
             this.btnLightingSetup.Name = "btnLightingSetup";
             this.btnLightingSetup.Size = new System.Drawing.Size(120, 30);
@@ -187,10 +198,10 @@
             // btnActivitySetup
             // 
             this.btnActivitySetup.AutoSize = true;
-            this.btnActivitySetup.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btnActivitySetup.FlatAppearance.BorderColor = this.backColor;
             this.btnActivitySetup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActivitySetup.Font = new System.Drawing.Font("Cooper Black", 10F);
-            this.btnActivitySetup.ForeColor = System.Drawing.Color.White;
+            this.btnActivitySetup.ForeColor = this.foreColor;
             this.btnActivitySetup.Location = new System.Drawing.Point(258, 11);
             this.btnActivitySetup.Name = "btnActivitySetup";
             this.btnActivitySetup.Size = new System.Drawing.Size(120, 30);
@@ -202,10 +213,10 @@
             // btnDeviceSetup
             // 
             this.btnDeviceSetup.AutoSize = true;
-            this.btnDeviceSetup.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btnDeviceSetup.FlatAppearance.BorderColor = this.backColor;
             this.btnDeviceSetup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeviceSetup.Font = new System.Drawing.Font("Cooper Black", 10F);
-            this.btnDeviceSetup.ForeColor = System.Drawing.Color.White;
+            this.btnDeviceSetup.ForeColor = this.foreColor;
             this.btnDeviceSetup.Location = new System.Drawing.Point(11, 11);
             this.btnDeviceSetup.Name = "btnDeviceSetup";
             this.btnDeviceSetup.Size = new System.Drawing.Size(120, 30);
@@ -217,6 +228,7 @@
             // panelSetupDevices
             // 
             this.panelSetupDevices.Controls.Add(this.btnAddDevice);
+            this.panelSetupDevices.Controls.Add(this.panelSetupDevicesContent);
             this.panelSetupDevices.Location = new System.Drawing.Point(-659, 1);
             this.panelSetupDevices.Name = "panelSetupDevices";
             this.panelSetupDevices.Size = new System.Drawing.Size(658, 480);
@@ -227,10 +239,10 @@
             // btnAddDevice
             // 
             this.btnAddDevice.AutoSize = true;
-            this.btnAddDevice.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btnAddDevice.FlatAppearance.BorderColor = this.backColor;
             this.btnAddDevice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddDevice.Font = new System.Drawing.Font("Cooper Black", 10F);
-            this.btnAddDevice.ForeColor = System.Drawing.Color.White;
+            this.btnAddDevice.ForeColor = this.foreColor;
             this.btnAddDevice.Location = new System.Drawing.Point(20, 46);
             this.btnAddDevice.Name = "btnAddDevice";
             this.btnAddDevice.Size = new System.Drawing.Size(120, 30);
@@ -239,9 +251,19 @@
             this.btnAddDevice.UseVisualStyleBackColor = true;
             this.btnAddDevice.Click += new System.EventHandler(this.btnAddDevice_Click);
             // 
+            // panelSetupDevicesContent
+            // 
+            this.panelSetupDevicesContent.Location = new System.Drawing.Point(0, 80);
+            this.panelSetupDevicesContent.Name = "panelSetupDevicesContent";
+            this.panelSetupDevicesContent.Size = new System.Drawing.Size(654, 400);
+            this.panelSetupDevicesContent.TabIndex = 1;
+            this.panelSetupDevicesContent.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
+            this.panelSetupDevicesContent.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
+            // 
             // panelSetupActivities
             // 
             this.panelSetupActivities.Controls.Add(this.btnAddActivity);
+            this.panelSetupActivities.Controls.Add(this.panelSetupActivitiesContent);
             this.panelSetupActivities.Location = new System.Drawing.Point(-659, 1);
             this.panelSetupActivities.Name = "panelSetupActivities";
             this.panelSetupActivities.Size = new System.Drawing.Size(658, 480);
@@ -252,10 +274,10 @@
             // btnAddActivity
             // 
             this.btnAddActivity.AutoSize = true;
-            this.btnAddActivity.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btnAddActivity.FlatAppearance.BorderColor = this.backColor;
             this.btnAddActivity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddActivity.Font = new System.Drawing.Font("Cooper Black", 10F);
-            this.btnAddActivity.ForeColor = System.Drawing.Color.White;
+            this.btnAddActivity.ForeColor = this.foreColor;
             this.btnAddActivity.Location = new System.Drawing.Point(2, 46);
             this.btnAddActivity.Name = "btnAddActivity";
             this.btnAddActivity.Size = new System.Drawing.Size(120, 30);
@@ -263,6 +285,93 @@
             this.btnAddActivity.Text = "Add Activity";
             this.btnAddActivity.UseVisualStyleBackColor = true;
             this.btnAddActivity.Click += new System.EventHandler(this.btnAddActivity_Click);
+            // 
+            // panelSetupActivitiesContent
+            // 
+            this.panelSetupActivitiesContent.Location = new System.Drawing.Point(0, 80);
+            this.panelSetupActivitiesContent.Name = "panelSetupActivitiesContent";
+            this.panelSetupActivitiesContent.Size = new System.Drawing.Size(654, 400);
+            this.panelSetupActivitiesContent.TabIndex = 1;
+            this.panelSetupActivitiesContent.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
+            this.panelSetupActivitiesContent.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
+            // 
+            // panelSetupGeneral
+            // 
+            this.panelSetupGeneral.Controls.Add(this.lblColorBack);
+            this.panelSetupGeneral.Controls.Add(this.lblColorFore);
+            this.panelSetupGeneral.Controls.Add(this.btnColorBack);
+            this.panelSetupGeneral.Controls.Add(this.btnColorFore);
+            this.panelSetupGeneral.Location = new System.Drawing.Point(-659, 1);
+            this.panelSetupGeneral.Name = "panelSetupGeneral";
+            this.panelSetupGeneral.Size = new System.Drawing.Size(658, 480);
+            this.panelSetupGeneral.TabIndex = 3;
+            this.panelSetupGeneral.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
+            this.panelSetupGeneral.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
+            // 
+            // btnGeneralSetup
+            // 
+            this.btnGeneralSetup.FlatAppearance.BorderColor = this.backColor;
+            this.btnGeneralSetup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGeneralSetup.Font = new System.Drawing.Font("Cooper Black", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGeneralSetup.ForeColor = this.foreColor;
+            this.btnGeneralSetup.Location = new System.Drawing.Point(1, 11);
+            this.btnGeneralSetup.Name = "btnGeneralSetup";
+            this.btnGeneralSetup.Size = new System.Drawing.Size(120, 30);
+            this.btnGeneralSetup.TabIndex = 0;
+            this.btnGeneralSetup.Text = "General";
+            this.btnGeneralSetup.UseVisualStyleBackColor = true;
+            this.btnGeneralSetup.Click += new System.EventHandler(this.btnSetupGeneral_Click);
+            this.btnGeneralSetup.BringToFront();
+            //
+            // lblColorFore
+            //
+            this.lblColorFore.AutoSize = true;
+            this.lblColorFore.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblColorFore.ForeColor = this.foreColor;
+            this.lblColorFore.Location = new System.Drawing.Point(30, 41);
+            this.lblColorFore.Name = "lblColorFore";
+            this.lblColorFore.Text = "Text Color";
+            this.lblColorFore.Size = new System.Drawing.Size(0, 16);
+            this.lblColorFore.TabIndex = 2;
+            //
+            // lblColorBack
+            //
+            this.lblColorBack.AutoSize = true;
+            this.lblColorBack.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblColorBack.ForeColor = this.foreColor;
+            this.lblColorBack.Location = new System.Drawing.Point(100, 41);
+            this.lblColorBack.Name = "lblColorBack";
+            this.lblColorBack.Text = "Background Color";
+            this.lblColorBack.Size = new System.Drawing.Size(0, 16);
+            this.lblColorBack.TabIndex = 2;
+            //
+            // btnColorFore
+            //
+            this.btnColorFore.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnColorFore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColorFore.Font = new System.Drawing.Font("Cooper Black", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnColorFore.ForeColor = this.foreColor;
+            this.btnColorFore.BackColor = this.foreColor;
+            this.btnColorFore.Location = new System.Drawing.Point(3, 41);
+            this.btnColorFore.Name = "btnColorFore";
+            this.btnColorFore.Size = new System.Drawing.Size(60, 60);
+            this.btnColorFore.TabIndex = 0;
+            this.btnColorFore.UseVisualStyleBackColor = true;
+            this.btnColorFore.Click += new System.EventHandler(btnColorFore_Click);
+            //
+            // btnColorBack
+            //
+            this.btnColorBack.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnColorBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColorBack.Font = new System.Drawing.Font("Cooper Black", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnColorBack.ForeColor = this.foreColor;
+            this.btnColorBack.BackColor = this.backColor;
+            this.btnColorBack.Location = new System.Drawing.Point(140, 41);
+            this.btnColorBack.Name = "btnColorBack";
+            this.btnColorBack.Size = new System.Drawing.Size(60, 60);
+            this.btnColorBack.TabIndex = 0;
+            this.btnColorBack.UseVisualStyleBackColor = true;
+            this.btnColorBack.Click += new System.EventHandler(btnColorBack_Click);
             // 
             // timerContentSlider
             // 
@@ -338,7 +447,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.SteelBlue;
+            this.BackColor = this.backColor;
             this.ClientSize = new System.Drawing.Size(800, 480);
             this.Controls.Add(this.panelActivities);
             this.Controls.Add(this.panelSetup);
@@ -366,6 +475,10 @@
 
         }
 
+ 
+
+
+
 
 
 
@@ -379,7 +492,8 @@
 
 
         #endregion
-
+        private System.Windows.Forms.Button btnGeneralSetup;
+        private System.Windows.Forms.Panel panelSetupGeneral;
         private System.Windows.Forms.Button btnActivities;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSetup;
@@ -397,16 +511,23 @@
         private System.Windows.Forms.Panel panelLighting;
         private System.Windows.Forms.Panel panelDevices;
         private System.Windows.Forms.Panel panelSetupDevices;
+        private System.Windows.Forms.Panel panelSetupDevicesContent;
         private System.Windows.Forms.Panel panelSetupActivities;
+        private System.Windows.Forms.Panel panelSetupActivitiesContent;
         private System.Windows.Forms.Timer timerSetupSlider;
         private System.Windows.Forms.Button btnAddDevice;
         private System.Windows.Forms.Button btnAddActivity;
         private System.Windows.Forms.Button btnDeviceSetup;
         private System.Windows.Forms.Timer timerLock;
+        private System.Windows.Forms.Label lblColorBack;
+        private System.Windows.Forms.Label lblColorFore;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem editCommandsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeEmitterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Button btnColorBack;
+        private System.Windows.Forms.Button btnColorFore;
     }
 }
 

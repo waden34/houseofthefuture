@@ -42,7 +42,7 @@
             // 
             this.lblDevice.AutoSize = true;
             this.lblDevice.ForeColor = System.Drawing.Color.White;
-            this.lblDevice.Location = new System.Drawing.Point(179, 27);
+            this.lblDevice.Location = new System.Drawing.Point(319, 17);
             this.lblDevice.Name = "lblDevice";
             this.lblDevice.Size = new System.Drawing.Size(0, 16);
             this.lblDevice.TabIndex = 0;
@@ -53,7 +53,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(274, 236);
+            this.button1.Location = new System.Drawing.Point(380, 359);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 9;
@@ -67,7 +67,7 @@
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOk.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOk.ForeColor = System.Drawing.Color.White;
-            this.btnOk.Location = new System.Drawing.Point(78, 236);
+            this.btnOk.Location = new System.Drawing.Point(184, 359);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 8;
@@ -81,7 +81,7 @@
             this.btnAddCommand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddCommand.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddCommand.ForeColor = System.Drawing.Color.White;
-            this.btnAddCommand.Location = new System.Drawing.Point(145, 46);
+            this.btnAddCommand.Location = new System.Drawing.Point(251, 36);
             this.btnAddCommand.Name = "btnAddCommand";
             this.btnAddCommand.Size = new System.Drawing.Size(137, 23);
             this.btnAddCommand.TabIndex = 10;
@@ -94,12 +94,12 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(168, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(167, 26);
             // 
             // aToolStripMenuItem
             // 
             this.aToolStripMenuItem.Name = "aToolStripMenuItem";
-            this.aToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.aToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.aToolStripMenuItem.Text = "Delete Command";
             this.aToolStripMenuItem.Click += new System.EventHandler(this.aToolStripMenuItem_Click);
             // 
@@ -108,12 +108,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.ClientSize = new System.Drawing.Size(426, 302);
+            this.ClientSize = new System.Drawing.Size(639, 394);
             this.ControlBox = false;
             this.Controls.Add(this.btnAddCommand);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnOk);
             this.Controls.Add(this.lblDevice);
+            this.Controls.Add(this.btnOk);
             this.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
