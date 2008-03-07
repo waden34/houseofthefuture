@@ -18,34 +18,7 @@ namespace HouseOfTheFuture
     {
         public frmMain()
         {
-            //Check the registry for settings
-            RegistryKey key = Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
-            if (key == null)
-            {
-                //Create new registry settings if keys not found
-                Console.WriteLine("Creating Registry keys");
-                key = Registry.LocalMachine.CreateSubKey("Software\\House of the Future");
-                key = Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
-                key.SetValue("database", AppDomain.CurrentDomain.BaseDirectory + "\\jHome.jdb");
-                System.Net.IPAddress[] ips = System.Net.Dns.GetHostAddresses(System.Net.Dns.GetHostName());
-                key.SetValue("irCommander", ips[0].ToString());
-                key.SetValue("logLevel", "2");
-                key.SetValue("foreColor", Color.White.ToArgb().ToString());
-                key.SetValue("backColor", Color.SteelBlue.ToArgb().ToString());
-                ips = null;
-            }
-            if (logLevel < 2)
-            {
-                Console.WriteLine("Reading Registry keys");
-            }
-            database = key.GetValue("database").ToString();
-            logLevel = int.Parse(key.GetValue("logLevel").ToString());
-            irCommander = key.GetValue("irCommander").ToString();
-            foreColor = Color.FromArgb(int.Parse(key.GetValue("foreColor").ToString()));
-            backColor = Color.FromArgb(int.Parse(key.GetValue("backColor").ToString()));
-            this.ForeColor = foreColor;
-            this.BackColor = backColor;
-            key = null;
+            
             InitializeComponent();
         }
         #region Variables
@@ -726,7 +699,7 @@ namespace HouseOfTheFuture
             }
 
             //Read the button layout for this activity
-            da = new SQLiteDataAdapter("select x,y,width,height,type, ifnull(display_name,\' \') as display_name, activity_buttons.device_id, activity_buttons.command_id from activity_buttons left outer join ir_commands on ir_commands.command_id = activity_buttons.command_id where activity_id = " + activity + ";", conn);
+            da = new SQLiteDataAdapter("select x,y,width,height,type, ifnull(display_name,\' \') as display_name, ir_commands.device_id, activity_buttons.command_id, command from activity_buttons left outer join ir_commands on ir_commands.command_id = activity_buttons.command_id where activity_id = " + activity + ";", conn);
             dt = new DataTable();
             da.Fill(dt);
             
@@ -773,10 +746,10 @@ namespace HouseOfTheFuture
             //Clean up the panel by removing all old Buttons
             foreach (Control ctl in panelActivities.Controls)
             {
-                if (ctl.GetType() != typeof(Buttons))
-                {
+                //if (ctl.GetType() != typeof(Buttons))
+                //{
                     panelActivities.Controls.Remove(ctl);
-                }
+                //}
             }
             //Disc Browser
             if (((Buttons)sender).Name == "-99")
@@ -982,6 +955,7 @@ namespace HouseOfTheFuture
                 btn.Tag = dt.Rows[i]["activity_id"].ToString();
                 btn.Font = new Font("Cooper Black", 10, FontStyle.Regular);
                 btn.Width = 30;
+                btn.Name = "btnActivity" + dt.Rows[i]["activity_id"].ToString();
                 btn.FlatStyle = FlatStyle.Flat;
                 btn.ForeColor = foreColor;
                 btn.FlatAppearance.BorderColor = backColor;
@@ -1235,6 +1209,33 @@ namespace HouseOfTheFuture
             }
             dlg.Dispose();
             dlg = null;
+        }
+
+        void txtIrCommander_TextChanged(object sender, System.EventArgs e)
+        {
+            irCommander = txtIrCommander.Text;
+            RegistryKey key = Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
+            key.SetValue("irCommander", irCommander);
+            key.Close();
+            key = null;
+        }
+
+        void txtDatabase_TextChanged(object sender, System.EventArgs e)
+        {
+            database = txtDatabase.Text;
+            RegistryKey key = Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
+            key.SetValue("database", database);
+            key.Close();
+            key = null;
+        }
+
+        void numLogLevel_ValueChanged(object sender, System.EventArgs e)
+        {
+            logLevel = (int)numLogLevel.Value;
+            RegistryKey key = Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
+            key.SetValue("logLevel", logLevel);
+            key.Close();
+            key = null;
         }
     }
 }

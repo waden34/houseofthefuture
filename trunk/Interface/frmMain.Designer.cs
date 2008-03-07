@@ -28,6 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
+            //Check the registry for settings
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
+            if (key == null)
+            {
+                //Create new registry settings if keys not found
+                System.Console.WriteLine("Creating Registry keys");
+                key = Microsoft.Win32.Registry.LocalMachine.CreateSubKey("Software\\House of the Future");
+                key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\House of the Future", true);
+                key.SetValue("database", System.AppDomain.CurrentDomain.BaseDirectory + "\\jHome.jdb");
+                System.Net.IPAddress[] ips = System.Net.Dns.GetHostAddresses(System.Net.Dns.GetHostName());
+                key.SetValue("irCommander", ips[0].ToString());
+                key.SetValue("logLevel", "2");
+                key.SetValue("foreColor", System.Drawing.Color.White.ToArgb().ToString());
+                key.SetValue("backColor", System.Drawing.Color.SteelBlue.ToArgb().ToString());
+                ips = null;
+            }
+            if (logLevel < 2)
+            {
+                System.Console.WriteLine("Reading Registry keys");
+            }
+            database = key.GetValue("database").ToString();
+            logLevel = int.Parse(key.GetValue("logLevel").ToString());
+            irCommander = key.GetValue("irCommander").ToString();
+            foreColor = System.Drawing.Color.FromArgb(int.Parse(key.GetValue("foreColor").ToString()));
+            backColor = System.Drawing.Color.FromArgb(int.Parse(key.GetValue("backColor").ToString()));
+            this.ForeColor = foreColor;
+            this.BackColor = backColor;
+            key = null;
+
+
             this.components = new System.ComponentModel.Container();
             this.btnActivities = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -60,6 +90,12 @@
             this.timerLock = new System.Windows.Forms.Timer(this.components);
             this.lblColorBack = new System.Windows.Forms.Label();
             this.lblColorFore = new System.Windows.Forms.Label();
+            this.lblDatabase = new System.Windows.Forms.Label();
+            this.lblIrCommander = new System.Windows.Forms.Label();
+            this.lblLogLevel = new System.Windows.Forms.Label();
+            this.txtDatabase = new System.Windows.Forms.TextBox();
+            this.txtIrCommander = new System.Windows.Forms.TextBox();
+            this.numLogLevel = new System.Windows.Forms.NumericUpDown();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeEmitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -301,6 +337,12 @@
             this.panelSetupGeneral.Controls.Add(this.lblColorFore);
             this.panelSetupGeneral.Controls.Add(this.btnColorBack);
             this.panelSetupGeneral.Controls.Add(this.btnColorFore);
+            this.panelSetupGeneral.Controls.Add(this.lblIrCommander);
+            this.panelSetupGeneral.Controls.Add(this.lblLogLevel);
+            this.panelSetupGeneral.Controls.Add(this.lblDatabase);
+            this.panelSetupGeneral.Controls.Add(this.txtDatabase);
+            this.panelSetupGeneral.Controls.Add(this.txtIrCommander);
+            this.panelSetupGeneral.Controls.Add(this.numLogLevel);
             this.panelSetupGeneral.Location = new System.Drawing.Point(-659, 1);
             this.panelSetupGeneral.Name = "panelSetupGeneral";
             this.panelSetupGeneral.Size = new System.Drawing.Size(658, 480);
@@ -328,7 +370,7 @@
             this.lblColorFore.AutoSize = true;
             this.lblColorFore.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblColorFore.ForeColor = this.foreColor;
-            this.lblColorFore.Location = new System.Drawing.Point(30, 41);
+            this.lblColorFore.Location = new System.Drawing.Point(30, 71);
             this.lblColorFore.Name = "lblColorFore";
             this.lblColorFore.Text = "Text Color";
             this.lblColorFore.Size = new System.Drawing.Size(0, 16);
@@ -339,11 +381,81 @@
             this.lblColorBack.AutoSize = true;
             this.lblColorBack.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblColorBack.ForeColor = this.foreColor;
-            this.lblColorBack.Location = new System.Drawing.Point(100, 41);
+            this.lblColorBack.Location = new System.Drawing.Point(140, 71);
             this.lblColorBack.Name = "lblColorBack";
             this.lblColorBack.Text = "Background Color";
             this.lblColorBack.Size = new System.Drawing.Size(0, 16);
             this.lblColorBack.TabIndex = 2;
+            //
+            // lblDatabase
+            //
+            this.lblDatabase.AutoSize = true;
+            this.lblDatabase.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDatabase.ForeColor = this.foreColor;
+            this.lblDatabase.Location = new System.Drawing.Point(450, 71);
+            this.lblDatabase.Name = "lblDatabase";
+            this.lblDatabase.Text = "Database";
+            this.lblDatabase.Size = new System.Drawing.Size(0, 16);
+            this.lblDatabase.TabIndex = 2;
+            //
+            // txtDatabase
+            //
+            this.txtDatabase.Font = new System.Drawing.Font("Cooper Black", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDatabase.ForeColor = this.foreColor;
+            this.txtDatabase.BackColor = this.backColor;
+            this.txtDatabase.Location = new System.Drawing.Point(295, 91);
+            this.txtDatabase.Name = "txtDatabase";
+            this.txtDatabase.Text = database;
+            this.txtDatabase.Size = new System.Drawing.Size(362, 16);
+            this.txtDatabase.TabIndex = 2;
+            this.txtDatabase.TextChanged += new System.EventHandler(txtDatabase_TextChanged);
+            //
+            // lblLogLevel
+            //
+            this.lblLogLevel.AutoSize = true;
+            this.lblLogLevel.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogLevel.ForeColor = this.foreColor;
+            this.lblLogLevel.Location = new System.Drawing.Point(100, 181);
+            this.lblLogLevel.Name = "lblLogLevel";
+            this.lblLogLevel.Text = "Log Level";
+            this.lblLogLevel.Size = new System.Drawing.Size(0, 16);
+            this.lblLogLevel.TabIndex = 2;
+            //
+            // numLogLevel
+            //
+            this.numLogLevel.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numLogLevel.Maximum = 2;
+            this.numLogLevel.Minimum = 0;
+            this.numLogLevel.Location = new System.Drawing.Point(120, 201);
+            this.numLogLevel.Size = new System.Drawing.Size(35, 10);
+            this.numLogLevel.ForeColor = this.foreColor;
+            this.numLogLevel.BackColor = this.backColor;
+            this.numLogLevel.Name = "numLogLevel";
+            this.numLogLevel.Value = (System.Decimal)logLevel;
+            this.numLogLevel.ValueChanged += new System.EventHandler(numLogLevel_ValueChanged);
+            //
+            // lblIrCommander
+            //
+            this.lblIrCommander.AutoSize = true;
+            this.lblIrCommander.Font = new System.Drawing.Font("Cooper Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIrCommander.ForeColor = this.foreColor;
+            this.lblIrCommander.Location = new System.Drawing.Point(225, 181);
+            this.lblIrCommander.Name = "lblIrCommander";
+            this.lblIrCommander.Text = "Global Cache IP";
+            this.lblIrCommander.Size = new System.Drawing.Size(0, 16);
+            this.lblIrCommander.TabIndex = 2;
+            //
+            // txtIrCommander
+            //
+            this.txtIrCommander.Font = new System.Drawing.Font("Cooper Black", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIrCommander.ForeColor = this.foreColor;
+            this.txtIrCommander.BackColor = this.backColor;
+            this.txtIrCommander.Location = new System.Drawing.Point(210, 201);
+            this.txtIrCommander.Name = "txtIrCommander";
+            this.txtIrCommander.Text = irCommander;
+            this.txtIrCommander.Size = new System.Drawing.Size(150, 16);
+            this.txtIrCommander.TabIndex = 2;
+            this.txtIrCommander.TextChanged += new System.EventHandler(txtIrCommander_TextChanged);
             //
             // btnColorFore
             //
@@ -352,7 +464,7 @@
             this.btnColorFore.Font = new System.Drawing.Font("Cooper Black", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnColorFore.ForeColor = this.foreColor;
             this.btnColorFore.BackColor = this.foreColor;
-            this.btnColorFore.Location = new System.Drawing.Point(3, 41);
+            this.btnColorFore.Location = new System.Drawing.Point(40, 91);
             this.btnColorFore.Name = "btnColorFore";
             this.btnColorFore.Size = new System.Drawing.Size(60, 60);
             this.btnColorFore.TabIndex = 0;
@@ -366,7 +478,7 @@
             this.btnColorBack.Font = new System.Drawing.Font("Cooper Black", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnColorBack.ForeColor = this.foreColor;
             this.btnColorBack.BackColor = this.backColor;
-            this.btnColorBack.Location = new System.Drawing.Point(140, 41);
+            this.btnColorBack.Location = new System.Drawing.Point(175, 91);
             this.btnColorBack.Name = "btnColorBack";
             this.btnColorBack.Size = new System.Drawing.Size(60, 60);
             this.btnColorBack.TabIndex = 0;
@@ -475,6 +587,10 @@
 
         }
 
+
+
+
+
  
 
 
@@ -528,6 +644,12 @@
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button btnColorBack;
         private System.Windows.Forms.Button btnColorFore;
+        private System.Windows.Forms.Label lblDatabase;
+        private System.Windows.Forms.TextBox txtDatabase;
+        private System.Windows.Forms.Label lblLogLevel;
+        private System.Windows.Forms.NumericUpDown numLogLevel;
+        private System.Windows.Forms.Label lblIrCommander;
+        private System.Windows.Forms.TextBox txtIrCommander;
     }
 }
 
