@@ -160,6 +160,8 @@ namespace HouseOfTheFuture
                     frm.unit_id = dt.Rows[0]["unit_id"].ToString();
                     frm.pos = dt.Rows[0]["slot"].ToString();
                     frm.frmMain = this;
+                    frm.ForeColor = foreColor;
+                    frm.BackColor = backColor;
                     frm.ShowDialog();
                 }
                 else
@@ -653,13 +655,22 @@ namespace HouseOfTheFuture
             activePanel = "panelActivities";
             timerContentSlider.Enabled = true;
             //Clean up the panel by removing old controls
+            for (int i = 0; i < panelActivitiesContent.Controls.Count; i++)
+            {
+
+                    panelActivitiesContent.Controls.RemoveAt(i);
+                    i--;
+            }
             for (int i = 0; i < panelActivities.Controls.Count; i++)
             {
-                panelActivities.Controls.RemoveAt(i);
-                i--;
+                if (panelActivities.Controls[i].Name != "panelActivitiesContent")
+                {
+                    panelActivities.Controls.RemoveAt(i);
+                    i--;
+                }
             }
             //Read all activities from the database
-            LoadActivities(panelActivities, contextMenuStrip1, new buttonClick(activity_click));
+            LoadActivities(panelActivitiesContent, contextMenuStrip1, new buttonClick(activity_click));
 
         }
 
@@ -670,9 +681,9 @@ namespace HouseOfTheFuture
         {
             string activity = ((Button)sender).Name.Substring(11);
             //Clean up the panel by removing all old controls
-            for (int i = 0; i < panelActivities.Controls.Count; i++)
+            for (int i = 0; i < panelActivitiesContent.Controls.Count; i++)
             {
-                panelActivities.Controls.RemoveAt(i);
+                panelActivitiesContent.Controls.RemoveAt(i);
                 i--;
             }
 
@@ -727,7 +738,7 @@ namespace HouseOfTheFuture
                     button.MouseDown += new MouseEventHandler(button_MouseDown);
                     button.MouseUp += new MouseEventHandler(button_MouseUp);
                 }
-                panelActivities.Controls.Add(button);
+                panelActivitiesContent.Controls.Add(button);
                 button = null;
             }
             dt.Dispose();
@@ -744,11 +755,11 @@ namespace HouseOfTheFuture
         void button_Click(object sender, EventArgs e)
         {
             //Clean up the panel by removing all old Buttons
-            foreach (Control ctl in panelActivities.Controls)
+            foreach (Control ctl in panelActivitiesContent.Controls)
             {
                 //if (ctl.GetType() != typeof(Buttons))
                 //{
-                    panelActivities.Controls.Remove(ctl);
+                panelActivitiesContent.Controls.Remove(ctl);
                 //}
             }
             //Disc Browser
@@ -760,7 +771,7 @@ namespace HouseOfTheFuture
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 int x = 10;
-                int y = 10;
+                int y = 0;
 
                 //Show the cover and title for each disc
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -768,12 +779,14 @@ namespace HouseOfTheFuture
                     PictureBox pb = new PictureBox();
                     MemoryStream ms = new MemoryStream((byte[])dt.Rows[i]["cover"]);
                     pb.Image = Image.FromStream(ms);
-                    panelActivities.Controls.Add(pb);
+                    panelActivitiesContent.Controls.Add(pb);
                     pb.Left = x;
                     pb.Top = y;
                     //Store the unit & slot info for the disc
                     pb.Tag = dt.Rows[i]["unit_id"].ToString() + "," + dt.Rows[i]["slot"].ToString();
-                    pb.SizeMode = PictureBoxSizeMode.AutoSize;
+                    pb.Width = 100;
+                    pb.Height = 140;
+                    pb.SizeMode = PictureBoxSizeMode.StretchImage;
                     //Store the ejected state in the Name property
                     pb.Name = dt.Rows[i]["ejected"].ToString();
                     pb.Click += new EventHandler(eject_disc);
@@ -784,6 +797,7 @@ namespace HouseOfTheFuture
                     lbl.TextAlign = ContentAlignment.MiddleCenter;
                     lbl.Left = x;
                     lbl.Top = y + 150;
+
                     //Wrap the label text if it's longer than 10 characters
                     if (lbl.Text.Length > 10)
                     {
@@ -800,7 +814,8 @@ namespace HouseOfTheFuture
                                 }
                                 else
                                 {
-                                    j += (10 - j);
+                                    temp += lbl.Text.Substring(j, 11);
+                                    j += 10;
                                 }
                             }
                             else
@@ -812,8 +827,33 @@ namespace HouseOfTheFuture
                         temp = null;
                     }
                     lbl.AutoSize = true;
-                    panelActivities.Controls.Add(lbl);
-                    if (x + pb.Width + 10 > panelActivities.Width)
+                    panelActivitiesContent.Controls.Add(lbl);
+
+                    //Add scroll buttons if there are too many activities
+                    if (pb.Top > (panelActivitiesContent.Height - (pb.Height + lbl.Height)) && !panelActivitiesContent.Controls.ContainsKey("scrollup"))
+                    {
+                        Buttons button = new Buttons();
+                        button.Type = Buttons.ButtonType.TriangleUp;
+                        button.Width = 40;
+                        button.Height = 20;
+                        button.Left = ((panelActivities.Width - button.Width) / 2);
+                        button.Top = 5;
+                        button.Name = "scrollup";
+                        button.Click += new EventHandler(ScrollPanel);
+                        panelActivities.Controls.Add(button);
+                        button.BringToFront();
+                        button = new Buttons();
+                        button.Type = Buttons.ButtonType.TriangleDown;
+                        button.Width = 40;
+                        button.Height = 20;
+                        button.Left = ((panelActivities.Width - button.Width) / 2);
+                        button.Top = panelActivities.Height - 25;
+                        button.Name = "scrolldown";
+                        button.Click += new EventHandler(ScrollPanel);
+                        panelActivities.Controls.Add(button);
+                        button = null;
+                    }
+                    if (x + pb.Width + 10 > panelActivitiesContent.Width)
                     {
                         x = 10;
                         y += 180;
@@ -884,6 +924,7 @@ namespace HouseOfTheFuture
         void button_MouseDown(object sender, MouseEventArgs e)
         {
             holding = true;
+            iCount = 0;
             activeDevice = ((Buttons)sender).Tag.ToString();
             activeDisplayName = ((Buttons)sender).Caption;
             holding = true;
@@ -1017,7 +1058,21 @@ namespace HouseOfTheFuture
                 {
                     if (ctl.GetType() == typeof(Button))
                     {
-                        ((Button)ctl).Top -= 60;
+                        ((Button)ctl).Top += 60;
+                    }
+                    else if (ctl.GetType() == typeof(Panel))
+                    {
+                        foreach (Control childCtl in (((Panel)ctl)).Controls)
+                        {
+                            if (childCtl.GetType() == typeof(PictureBox))
+                            {
+                                ((PictureBox)childCtl).Top += 60;
+                            }
+                            else if (childCtl.GetType() == typeof(Label))
+                            {
+                                ((Label)childCtl).Top += 60;
+                            }
+                        }
                     }
                 }
             }
@@ -1027,7 +1082,21 @@ namespace HouseOfTheFuture
                 {
                     if (ctl.GetType() == typeof(Button))
                     {
-                        ((Button)ctl).Top += 60;
+                        ((Button)ctl).Top -= 60;
+                    }
+                    else if (ctl.GetType() == typeof(Panel))
+                    {
+                        foreach (Control childCtl in (((Panel)ctl)).Controls)
+                        {
+                            if (childCtl.GetType() == typeof(PictureBox))
+                            {
+                                ((PictureBox)childCtl).Top -= 60;
+                            }
+                            else if (childCtl.GetType() == typeof(Label))
+                            {
+                                ((Label)childCtl).Top -= 60;
+                            }
+                        }
                     }
                 }
             }
@@ -1049,6 +1118,8 @@ namespace HouseOfTheFuture
             frmAddDevice frm = new frmAddDevice();
             frm.database = database;
             frm.frm = this;
+            frm.ForeColor = foreColor;
+            frm.BackColor = backColor;
             frm.ShowDialog(this);
         }
        
@@ -1060,6 +1131,8 @@ namespace HouseOfTheFuture
             frmAddActivity frm = new frmAddActivity();
             frm.database = database;
             frm.frm = this;
+            frm.ForeColor = foreColor;
+            frm.BackColor = backColor;
             frm.ShowDialog(this);
         }
 
@@ -1099,6 +1172,8 @@ namespace HouseOfTheFuture
             frmCommands frm = new frmCommands();
             frm.database = database;
             frm.device_id = int.Parse(((Button)contextMenuStrip1.SourceControl).Tag.ToString());
+            frm.ForeColor = foreColor;
+            frm.BackColor = backColor;
             frm.ShowDialog();
         }
 

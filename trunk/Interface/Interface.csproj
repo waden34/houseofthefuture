@@ -187,7 +187,6 @@
     <None Include="Resources\Buttons\round_button.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Resources\Buttons\button_square.png" />
     <None Include="Resources\Buttons\button_square_click.png" />
     <None Include="Resources\Buttons\button_square_over.png" />

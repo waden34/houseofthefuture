@@ -110,7 +110,7 @@ namespace HouseOfTheFuture
             }
             else if (btnOk.Text == "Next Device")
             {
-                foreach (Control ctl in this.Controls)
+                foreach (Control ctl in this.panel1.Controls)
                 {
                     if (ctl.GetType() == typeof(CheckBox) && ((CheckBox)ctl).Checked)
                     {
@@ -130,6 +130,19 @@ namespace HouseOfTheFuture
             }
             else if (btnOk.Text == "Setup Buttons")
             {
+                foreach (Control ctl in this.panel1.Controls)
+                {
+                    if (ctl.GetType() == typeof(CheckBox) && ((CheckBox)ctl).Checked)
+                    {
+                        SQLiteConnection conn = new SQLiteConnection("Data Source=" + database);
+                        SQLiteDataAdapter da = new SQLiteDataAdapter("insert into activity_startup values (" + activity_id + "," + device_ids[activeDevice] + "," + ((CheckBox)ctl).Tag.ToString() + ");", conn);
+                        da.Fill(new DataTable());
+                        da.Dispose();
+                        da = null;
+                        conn.Dispose();
+                        conn = null;
+                    }
+                }
                 for (int j = 0; j < this.Controls.Count; j++)
                 {
                     if (this.Controls[j].GetType() != typeof(Button))

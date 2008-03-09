@@ -84,6 +84,7 @@
             this.btnGeneralSetup = new System.Windows.Forms.Button();
             this.timerContentSlider = new System.Windows.Forms.Timer(this.components);
             this.panelActivities = new System.Windows.Forms.Panel();
+            this.panelActivitiesContent = new System.Windows.Forms.Panel();
             this.panelLighting = new System.Windows.Forms.Panel();
             this.panelDevices = new System.Windows.Forms.Panel();
             this.timerSetupSlider = new System.Windows.Forms.Timer(this.components);
@@ -492,12 +493,22 @@
             // 
             // panelActivities
             // 
+            this.panelActivities.Controls.Add(this.panelActivitiesContent);
             this.panelActivities.Location = new System.Drawing.Point(1, 1);
             this.panelActivities.Name = "panelActivities";
             this.panelActivities.Size = new System.Drawing.Size(658, 480);
             this.panelActivities.TabIndex = 4;
             this.panelActivities.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
             this.panelActivities.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
+            //
+            // panelActivitiesContent
+            //
+            this.panelActivitiesContent.BringToFront();
+            this.panelActivitiesContent.Location = new System.Drawing.Point(0, 40);
+            this.panelActivitiesContent.Name = "panelActivitiesContent";
+            this.panelActivitiesContent.Size = new System.Drawing.Size(658, 400);
+            this.panelActivitiesContent.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
+            this.panelActivitiesContent.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
             // 
             // panelLighting
             // 
@@ -624,6 +635,7 @@
         private System.Windows.Forms.Button btnActivitySetup;
         private System.Windows.Forms.Timer timerContentSlider;
         private System.Windows.Forms.Panel panelActivities;
+        private System.Windows.Forms.Panel panelActivitiesContent;
         private System.Windows.Forms.Panel panelLighting;
         private System.Windows.Forms.Panel panelDevices;
         private System.Windows.Forms.Panel panelSetupDevices;
