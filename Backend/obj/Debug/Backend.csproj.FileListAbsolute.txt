@@ -10,3 +10,9 @@ C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Backend\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Backend\obj\Debug\Backend.exe
 C:\Documents and Settings\JeremiahJ.NCM\My Documents\Visual Studio 2008\Projects\HouseOfTheFuture\houseofthefuture\Backend\obj\Debug\Backend.pdb
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Backend\bin\Debug\Backend.exe
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Backend\bin\Debug\Backend.pdb
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Backend\bin\Debug\ControlThink.ZWave.xml
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Backend\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Backend\obj\Debug\Backend.exe
+C:\Users\Jeremiah\Documents\Visual Studio 2008\Projects\House Of the Future\Backend\obj\Debug\Backend.pdb
